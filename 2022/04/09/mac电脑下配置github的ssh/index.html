@@ -16,25 +16,23 @@
   <meta name="author" content="山上的清风">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Nginx 是一款面向性能设计的 HTTP 服务器，相较于 Apache、lighttpd 具有占有内存少，稳定性高等优势。与旧版本（">
+    <meta name="description" content="1、验证是否有ssh keysl1ls -al ~&#x2F;.ssh  注：如果有.pub结尾的文件直接打开1cat ~&#x2F;.ssh&#x2F;id_rsa.pub  复制到github上的SSH keys 2、新建ssh keys1.生成ssh-keygenl1ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;  其中，”your_emai">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nginx反向代理">
-<meta property="og:url" content="http://example.com/2022/04/07/nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/index.html">
+<meta property="og:title" content="mac电脑下配置github的ssh">
+<meta property="og:url" content="http://example.com/2022/04/09/mac%E7%94%B5%E8%84%91%E4%B8%8B%E9%85%8D%E7%BD%AEgithub%E7%9A%84ssh/index.html">
 <meta property="og:site_name" content="Latiy博客">
-<meta property="og:description" content="Nginx 是一款面向性能设计的 HTTP 服务器，相较于 Apache、lighttpd 具有占有内存少，稳定性高等优势。与旧版本（">
+<meta property="og:description" content="1、验证是否有ssh keysl1ls -al ~&#x2F;.ssh  注：如果有.pub结尾的文件直接打开1cat ~&#x2F;.ssh&#x2F;id_rsa.pub  复制到github上的SSH keys 2、新建ssh keys1.生成ssh-keygenl1ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;  其中，”your_emai">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/adorn/nginx.png">
-<meta property="article:published_time" content="2022-04-07T10:40:27.000Z">
-<meta property="article:modified_time" content="2022-04-09T08:38:51.291Z">
+<meta property="article:published_time" content="2022-04-09T09:09:57.000Z">
+<meta property="article:modified_time" content="2022-04-09T09:20:43.608Z">
 <meta property="article:author" content="山上的清风">
-<meta property="article:tag" content="mac">
-<meta property="article:tag" content="docker">
-<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="Mac">
+<meta property="article:tag" content="ssh">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/adorn/nginx.png">
   
   
-  <title>nginx反向代理 - Latiy博客</title>
+  <title>mac电脑下配置github的ssh - Latiy博客</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -178,7 +176,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="nginx反向代理">
+            <span class="h2" id="subtitle" title="mac电脑下配置github的ssh">
               
             </span>
 
@@ -193,8 +191,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-04-07 18:40" pubdate>
-        2022年4月7日 晚上
+      <time datetime="2022-04-09 17:09" pubdate>
+        2022年4月9日 下午
       </time>
     </span>
   
@@ -204,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.6k 字
+      496 字
     </span>
   
 
@@ -213,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14 分钟
+      5 分钟
     </span>
   
 
@@ -250,7 +248,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">nginx反向代理</h1>
+            <h1 style="display: none">mac电脑下配置github的ssh</h1>
             
               <p class="note note-info">
                 
@@ -259,55 +257,24 @@
               </p>
             
             <div class="markdown-body">
-              <h1 id="1、Mac上nginx容器反向代理本地项目"><a href="#1、Mac上nginx容器反向代理本地项目" class="headerlink" title="1、Mac上nginx容器反向代理本地项目"></a>1、Mac上nginx容器反向代理本地项目</h1><h2 id="1、获取镜像"><a href="#1、获取镜像" class="headerlink" title="1、获取镜像"></a>1、获取镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">root@root ~ % docker pull nginx:perl<br></code></pre></td></tr></table></figure>
+              <h2 id="1、验证是否有ssh-keys"><a href="#1、验证是否有ssh-keys" class="headerlink" title="1、验证是否有ssh keys"></a>1、验证是否有ssh keys</h2><figure class="highlight shell"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">ls -al ~/.ssh<br></code></pre></td></tr></table></figure>
 
-<h2 id="2、复制容器内容"><a href="#2、复制容器内容" class="headerlink" title="2、复制容器内容"></a>2、复制容器内容</h2><h3 id="1-先运行一个nginx容器"><a href="#1-先运行一个nginx容器" class="headerlink" title="(1)先运行一个nginx容器"></a>(1)先运行一个nginx容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@root ~ % docker run -p 80:80 -d nginx:perl --name nginx-demo<br></code></pre></td></tr></table></figure>
+<h3 id="注：如果有-pub结尾的文件直接打开"><a href="#注：如果有-pub结尾的文件直接打开" class="headerlink" title="注：如果有.pub结尾的文件直接打开"></a>注：如果有.pub结尾的文件直接打开</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat ~/.ssh/id_rsa.pub<br></code></pre></td></tr></table></figure>
 
-<h3 id="2-进入容器内部"><a href="#2-进入容器内部" class="headerlink" title="(2)进入容器内部"></a>(2)进入容器内部</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@root ~ % docker exec -it nginx-demo /bin/bash<br></code></pre></td></tr></table></figure>
+<p>复制到github上的SSH keys</p>
+<h2 id="2、新建ssh-keys"><a href="#2、新建ssh-keys" class="headerlink" title="2、新建ssh keys"></a>2、新建ssh keys</h2><h3 id="1-生成ssh-keygen"><a href="#1-生成ssh-keygen" class="headerlink" title="1.生成ssh-keygen"></a>1.生成ssh-keygen</h3><figure class="highlight shell"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;<br></code></pre></td></tr></table></figure>
 
-<h3 id="3-将容器内部-usr-share-nginx-文件夹下的所有文件复制到本地"><a href="#3-将容器内部-usr-share-nginx-文件夹下的所有文件复制到本地" class="headerlink" title="(3)将容器内部 /usr/share/nginx 文件夹下的所有文件复制到本地"></a>(3)将容器内部 /usr/share/nginx 文件夹下的所有文件复制到本地</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@root private/mydata/nginx/conf ~ % cp -r /usr/share/nginx<br></code></pre></td></tr></table></figure>
+<p>其中，”<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=mailto:your_email@example.com">your_email@example.com</a>“是你的github关联的邮箱；</p>
+<h3 id="2-确定key保存的目录（直接回车，选择默认）"><a href="#2-确定key保存的目录（直接回车，选择默认）" class="headerlink" title="2.确定key保存的目录（直接回车，选择默认）"></a>2.确定key保存的目录（直接回车，选择默认）</h3><h3 id="3-输入密码（可回车不需要密码，写密码要写两遍）"><a href="#3-输入密码（可回车不需要密码，写密码要写两遍）" class="headerlink" title="3.输入密码（可回车不需要密码，写密码要写两遍）"></a>3.输入密码（可回车不需要密码，写密码要写两遍）</h3><p>这个时候在默认路径下就生成了两个文件，公钥和私钥。</p>
+<h3 id="4-将SSH-Key添加到ssh-agent"><a href="#4-将SSH-Key添加到ssh-agent" class="headerlink" title="4.将SSH Key添加到ssh-agent"></a>4.将SSH Key添加到ssh-agent</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">eval $(ssh-agent -s)<br></code></pre></td></tr></table></figure>
 
-<h3 id="4-重命名为conf"><a href="#4-重命名为conf" class="headerlink" title="(4)重命名为conf"></a>(4)重命名为conf</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@root private/mydata/nginx/conf ~ % mv nginx conf<br></code></pre></td></tr></table></figure>
+<p>返回agent的Pid</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-add ~/.ssh/id_rsa<br></code></pre></td></tr></table></figure>
 
-<h3 id="5-删除容器"><a href="#5-删除容器" class="headerlink" title="(5)删除容器"></a>(5)删除容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@root ～ % docker rm -f nginx-demo<br></code></pre></td></tr></table></figure>
+<p>然后输入密码，没有密码的直接回车，提示添加成功</p>
+<h3 id="5-打开id-rsa-pub文件，复制文件内容到github"><a href="#5-打开id-rsa-pub文件，复制文件内容到github" class="headerlink" title="5.打开id_rsa.pub文件，复制文件内容到github"></a>5.打开id_rsa.pub文件，复制文件内容到github</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta"># </span><span class="language-bash">查看目录</span><br>ls -al ~/.ssh<br><span class="hljs-meta"># </span><span class="language-bash">打开id_rsa.pub文件</span><br>cat ~/.ssh/id_rsa.pub<br></code></pre></td></tr></table></figure>
 
-<h2 id="3、运行容器并挂载到本地"><a href="#3、运行容器并挂载到本地" class="headerlink" title="3、运行容器并挂载到本地"></a>3、运行容器并挂载到本地</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@root ～ % docker run --name nginx -v /private/mydata/nginx/conf:/usr/share/nginx/conf -v /private/mydata/nginx/html:/usr/share/nginx/html -v /private/mydata/nginx/logs:/usr/share/nginx/logs -p 80:80 -d nginx:perl<br></code></pre></td></tr></table></figure>
-
-<h1 id="2、nginx在宿主机上反向代理"><a href="#2、nginx在宿主机上反向代理" class="headerlink" title="2、nginx在宿主机上反向代理"></a>2、nginx在宿主机上反向代理</h1><h2 id="1、安装（可以用-brew-安装）"><a href="#1、安装（可以用-brew-安装）" class="headerlink" title="1、安装（可以用 brew 安装）"></a>1、安装（可以用 brew 安装）</h2><figure class="highlight shell"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo brew install nginx<br></code></pre></td></tr></table></figure>
-
-<h2 id="2、查看-nginx-版本"><a href="#2、查看-nginx-版本" class="headerlink" title="2、查看 nginx 版本"></a>2、查看 nginx 版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nginx -v<br></code></pre></td></tr></table></figure>
-
-<h2 id="3、启动-nginx"><a href="#3、启动-nginx" class="headerlink" title="3、启动 nginx"></a>3、启动 nginx</h2><figure class="highlight shell"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo nginx  <br></code></pre></td></tr></table></figure>
-
-<p>也可以使用下面的命令启动，但是配置文件nginx.conf修改后用这个命令执行不生效，故不建议使用：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo brew services start nginx<br></code></pre></td></tr></table></figure>
-
-<h2 id="4、查看-nginx-是否启动成功"><a href="#4、查看-nginx-是否启动成功" class="headerlink" title="4、查看 nginx 是否启动成功"></a>4、查看 nginx 是否启动成功</h2><p>在浏览器中访问 <a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=http://localhost:8080/">http://localhost:8080</a>，如果出现 Welcome to nginx ，则说明启动成功.</p>
-<p>备注：端口号是在配置文件 nginx.conf 里面配置的，默认端口是 8080 ，配置文件的位置 /usr/local/etc/nginx</p>
-<h2 id="5、关闭nginx"><a href="#5、关闭nginx" class="headerlink" title="5、关闭nginx"></a>5、关闭nginx</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo nginx -s stop<br></code></pre></td></tr></table></figure>
-
-<p>也可以使用下面的命令启动，但是配置文件nginx.conf修改后用这个命令执行不生效，故不建议使用：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo brew services stop nginx<br></code></pre></td></tr></table></figure>
-
-<h2 id="6、重新加载nginx"><a href="#6、重新加载nginx" class="headerlink" title="6、重新加载nginx"></a>6、重新加载nginx</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo nginx -s reload<br></code></pre></td></tr></table></figure>
-
-<h2 id="7、可能遇到的问题"><a href="#7、可能遇到的问题" class="headerlink" title="7、可能遇到的问题"></a>7、可能遇到的问题</h2><ul>
-<li><p>端口被占用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nginx: [emerg] bind() to 0.0.0.0:80 failed (48: Address already in use)<br></code></pre></td></tr></table></figure>
-
-<p>解决方法：(1)修改 nginx.conf 文件里的端口号 </p>
-<p>​                    (2)使用 losf -i:端口号 查看占用端口的信息，然后 kill -9 PID</p>
-</li>
-<li><p>权限不够</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nginx: [alert] could not open error log file: open() “/usr/local/var/log/nginx/error.log” failed (13: Permission denied)<br></code></pre></td></tr></table></figure>
-
-<p>解决方法：在命令前加上 sudo，这时可能会要求输入密码，密码就是电脑的开机密码啦~</p>
-</li>
-</ul>
-<h2 id="8、补充"><a href="#8、补充" class="headerlink" title="8、补充"></a>8、补充</h2><p>安装 homebrew ，将以上命令粘贴至terminal，然后回车即可</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;<br></code></pre></td></tr></table></figure>
-
-<h2 id="9、总结"><a href="#9、总结" class="headerlink" title="9、总结"></a>9、总结</h2><figure class="highlight shell"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">nginx -s reload 重新加载配置<br>nginx -s reopen 重启<br>nginx -s stop 停止<br>nginx -s quit 退出<br>nginx -V 查看版本，以及配置文件地址<br>nginx -v 查看版本<br>nginx -c filename 指定配置文件<br>nginx -h 帮助<br></code></pre></td></tr></table></figure>
+<h2 id="3、验证github是否链接"><a href="#3、验证github是否链接" class="headerlink" title="3、验证github是否链接"></a>3、验证github是否链接</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh -T git@github.com<br></code></pre></td></tr></table></figure>
 
 
             </div>
@@ -319,11 +286,11 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/mac/">mac</a>
+                      <a class="hover-with-bg" href="/tags/GitHub/">GitHub</a>
                     
-                      <a class="hover-with-bg" href="/tags/docker/">docker</a>
+                      <a class="hover-with-bg" href="/tags/Mac/">Mac</a>
                     
-                      <a class="hover-with-bg" href="/tags/nginx/">nginx</a>
+                      <a class="hover-with-bg" href="/tags/ssh/">ssh</a>
                     
                   </div>
                 
@@ -340,18 +307,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/09/mac%E7%94%B5%E8%84%91%E4%B8%8B%E9%85%8D%E7%BD%AEgithub%E7%9A%84ssh/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">mac电脑下配置github的ssh</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/04/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
-                        <span class="hidden-mobile">Linux常用命令</span>
+                      <a href="/2022/04/07/nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/">
+                        <span class="hidden-mobile">nginx反向代理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

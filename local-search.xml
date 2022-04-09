@@ -4,6 +4,29 @@
   
   
   <entry>
+    <title>mac电脑下配置github的ssh</title>
+    <link href="/2022/04/09/mac%E7%94%B5%E8%84%91%E4%B8%8B%E9%85%8D%E7%BD%AEgithub%E7%9A%84ssh/"/>
+    <url>/2022/04/09/mac%E7%94%B5%E8%84%91%E4%B8%8B%E9%85%8D%E7%BD%AEgithub%E7%9A%84ssh/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1、验证是否有ssh-keys"><a href="#1、验证是否有ssh-keys" class="headerlink" title="1、验证是否有ssh keys"></a>1、验证是否有ssh keys</h2><figure class="highlight shell"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">ls -al ~/.ssh<br></code></pre></td></tr></table></figure><h3 id="注：如果有-pub结尾的文件直接打开"><a href="#注：如果有-pub结尾的文件直接打开" class="headerlink" title="注：如果有.pub结尾的文件直接打开"></a>注：如果有.pub结尾的文件直接打开</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat ~/.ssh/id_rsa.pub<br></code></pre></td></tr></table></figure><p>复制到github上的SSH keys</p><h2 id="2、新建ssh-keys"><a href="#2、新建ssh-keys" class="headerlink" title="2、新建ssh keys"></a>2、新建ssh keys</h2><h3 id="1-生成ssh-keygen"><a href="#1-生成ssh-keygen" class="headerlink" title="1.生成ssh-keygen"></a>1.生成ssh-keygen</h3><figure class="highlight shell"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;<br></code></pre></td></tr></table></figure><p>其中，”<a href="https://links.jianshu.com/go?to=mailto:your_email@example.com">your_email@example.com</a>“是你的github关联的邮箱；</p><h3 id="2-确定key保存的目录（直接回车，选择默认）"><a href="#2-确定key保存的目录（直接回车，选择默认）" class="headerlink" title="2.确定key保存的目录（直接回车，选择默认）"></a>2.确定key保存的目录（直接回车，选择默认）</h3><h3 id="3-输入密码（可回车不需要密码，写密码要写两遍）"><a href="#3-输入密码（可回车不需要密码，写密码要写两遍）" class="headerlink" title="3.输入密码（可回车不需要密码，写密码要写两遍）"></a>3.输入密码（可回车不需要密码，写密码要写两遍）</h3><p>这个时候在默认路径下就生成了两个文件，公钥和私钥。</p><h3 id="4-将SSH-Key添加到ssh-agent"><a href="#4-将SSH-Key添加到ssh-agent" class="headerlink" title="4.将SSH Key添加到ssh-agent"></a>4.将SSH Key添加到ssh-agent</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">eval $(ssh-agent -s)<br></code></pre></td></tr></table></figure><p>返回agent的Pid</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-add ~/.ssh/id_rsa<br></code></pre></td></tr></table></figure><p>然后输入密码，没有密码的直接回车，提示添加成功</p><h3 id="5-打开id-rsa-pub文件，复制文件内容到github"><a href="#5-打开id-rsa-pub文件，复制文件内容到github" class="headerlink" title="5.打开id_rsa.pub文件，复制文件内容到github"></a>5.打开id_rsa.pub文件，复制文件内容到github</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta"># </span><span class="language-bash">查看目录</span><br>ls -al ~/.ssh<br><span class="hljs-meta"># </span><span class="language-bash">打开id_rsa.pub文件</span><br>cat ~/.ssh/id_rsa.pub<br></code></pre></td></tr></table></figure><h2 id="3、验证github是否链接"><a href="#3、验证github是否链接" class="headerlink" title="3、验证github是否链接"></a>3、验证github是否链接</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh -T git@github.com<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>GitHub</tag>
+      
+      <tag>Mac</tag>
+      
+      <tag>ssh</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>nginx反向代理</title>
     <link href="/2022/04/07/nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"/>
     <url>/2022/04/07/nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/</url>
