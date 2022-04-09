@@ -1,0 +1,2357 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="山上的清风">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Linux不仅系统性能稳定，而且是开源软件。其核心防火墙组件性能高效、配置简单，保证了系统的安全。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常用命令">
+<meta property="og:url" content="http://example.com/2022/03/04/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="Latiy博客">
+<meta property="og:description" content="Linux不仅系统性能稳定，而且是开源软件。其核心防火墙组件性能高效、配置简单，保证了系统的安全。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/adorn/linux.png">
+<meta property="article:published_time" content="2022-03-04T15:08:35.989Z">
+<meta property="article:modified_time" content="2022-03-06T12:18:50.732Z">
+<meta property="article:author" content="山上的清风">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/adorn/linux.png">
+  
+  
+  <title>Linux常用命令 - Latiy博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":false,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>山上的清风</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Linux常用命令">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      山上的清风
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-04 23:08" pubdate>
+        2022年3月4日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      18k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      149 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Linux常用命令</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2022年3月6日 晚上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="一、文本编辑器Vim"><a href="#一、文本编辑器Vim" class="headerlink" title="一、文本编辑器Vim"></a>一、文本编辑器Vim</h2><p>vim的三种操作模式，分别是命令模式（Command mode）、输入模式（Insert mode）和底线命令模式（Last line mode）。</p>
+<p>三种模式切换快捷键：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>命令模式</td>
+<td>ESC</td>
+</tr>
+<tr>
+<td>输入模式</td>
+<td>i 或 a</td>
+</tr>
+<tr>
+<td>底线命令模式</td>
+<td>:</td>
+</tr>
+</tbody></table>
+<h3 id="1-命令模式"><a href="#1-命令模式" class="headerlink" title="1.命令模式"></a>1.命令模式</h3><p>常用的快捷操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>光标左移</td>
+<td>h</td>
+</tr>
+<tr>
+<td>光标右移</td>
+<td>l (小写L)</td>
+</tr>
+<tr>
+<td>光标上移</td>
+<td>k</td>
+</tr>
+<tr>
+<td>光标下移</td>
+<td>j</td>
+</tr>
+<tr>
+<td>光标移动到下一个单词</td>
+<td>w</td>
+</tr>
+<tr>
+<td>光标移动到上一个单词</td>
+<td>b</td>
+</tr>
+<tr>
+<td>移动游标到第 n 行</td>
+<td>nG</td>
+</tr>
+<tr>
+<td>移动游标到第一行</td>
+<td>g g</td>
+</tr>
+<tr>
+<td>移动游标到最后一行</td>
+<td>G</td>
+</tr>
+<tr>
+<td>快速回到上一次光标所在位置</td>
+<td>Ctrl+o</td>
+</tr>
+<tr>
+<td>删除当前字符</td>
+<td>x</td>
+</tr>
+<tr>
+<td>删除前一个字符</td>
+<td>X</td>
+</tr>
+<tr>
+<td>删除整行</td>
+<td>dd</td>
+</tr>
+<tr>
+<td>删除一个单词</td>
+<td>dw或daw</td>
+</tr>
+<tr>
+<td>删除至行尾</td>
+<td>d$或 D</td>
+</tr>
+<tr>
+<td>删除至行首</td>
+<td>d^</td>
+</tr>
+<tr>
+<td>删除到文档末尾</td>
+<td>dG</td>
+</tr>
+<tr>
+<td>删除至文档首部</td>
+<td>d1G</td>
+</tr>
+<tr>
+<td>删除 n 行</td>
+<td>ndd</td>
+</tr>
+<tr>
+<td>删除 n 个连续字符</td>
+<td>nx</td>
+</tr>
+<tr>
+<td>将光标所在位置字母变成大写或小写</td>
+<td>~</td>
+</tr>
+<tr>
+<td>复制游标所在的整行</td>
+<td>yy（3yy 表示复制 3 行）</td>
+</tr>
+<tr>
+<td>粘贴至光标后（下）</td>
+<td>p</td>
+</tr>
+<tr>
+<td>粘贴至光标后（上）</td>
+<td>P</td>
+</tr>
+<tr>
+<td>剪切</td>
+<td>dd</td>
+</tr>
+<tr>
+<td>交换上下行</td>
+<td>ddp</td>
+</tr>
+<tr>
+<td>替换整行，即删除游标所在行并进入插入模式</td>
+<td>cc</td>
+</tr>
+<tr>
+<td>撤销一次或 n 次操作</td>
+<td>u{n}</td>
+</tr>
+<tr>
+<td>撤销当前行的所有修改</td>
+<td>U</td>
+</tr>
+<tr>
+<td>恢复撤销操作</td>
+<td>Ctrl+r</td>
+</tr>
+<tr>
+<td>整行将向右缩进</td>
+<td>&gt;&gt;</td>
+</tr>
+<tr>
+<td>整行将向左退回</td>
+<td>&lt;&lt;</td>
+</tr>
+<tr>
+<td>若档案没有更动，则不储存离开，若档案已经被更改过，则储存后离开</td>
+<td>ZZ</td>
+</tr>
+</tbody></table>
+<h3 id="2-输入模式"><a href="#2-输入模式" class="headerlink" title="2.输入模式"></a>2.输入模式</h3><p>在命令模式下按 i 或 a 键就进入了输入模式，在输入模式下，您可以正常的使用键盘按键对文本进行插入和删除等操作。</p>
+<h3 id="3-底线命令模式"><a href="#3-底线命令模式" class="headerlink" title="3.底线命令模式"></a>3.底线命令模式</h3><p>在命令模式下按:键就进入了底线命令模式，在底线命令模式中可以输入单个或多个字符的命令。</p>
+<p>常用的快捷操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>保存</td>
+<td>:w</td>
+</tr>
+<tr>
+<td>退出</td>
+<td>:q</td>
+</tr>
+<tr>
+<td>保存并退出</td>
+<td>:wq（:wq!表示强制保存退出）</td>
+</tr>
+<tr>
+<td>将文件另存为其他文件名</td>
+<td>:w new_filename</td>
+</tr>
+<tr>
+<td>显示行号</td>
+<td>:set nu</td>
+</tr>
+<tr>
+<td>取消行号</td>
+<td>:set nonu</td>
+</tr>
+<tr>
+<td>使本行内容居中</td>
+<td>:ce</td>
+</tr>
+<tr>
+<td>使本行文本靠右</td>
+<td>:ri</td>
+</tr>
+<tr>
+<td>使本行内容靠左</td>
+<td>:le</td>
+</tr>
+<tr>
+<td>向光标之下寻找一个名称为 word 的字符串</td>
+<td>:/word</td>
+</tr>
+<tr>
+<td>向光标之上寻找一个字符串名称为 word 的字符串</td>
+<td>:?word</td>
+</tr>
+<tr>
+<td>重复前一个搜寻的动作</td>
+<td>:n</td>
+</tr>
+<tr>
+<td>从第一行到最后一行行寻找 word1 字符串，并将该字符串取代为 word2</td>
+<td>:1,$s/word1/word2/g 或 :%s/word1/word2/g</td>
+</tr>
+</tbody></table>
+<h2 id="二、文本文件"><a href="#二、文本文件" class="headerlink" title="二、文本文件"></a>二、文本文件</h2><h3 id="1-文本文件查看命令"><a href="#1-文本文件查看命令" class="headerlink" title="(1)文本文件查看命令"></a>(1)文本文件查看命令</h3><h4 id="1-cat"><a href="#1-cat" class="headerlink" title="1.cat"></a>1.cat</h4><p>命令描述：cat 命令用于查看内容较少的纯文本文件。</p>
+<p>命令格式：cat [选项] [文件]。</p>
+<p>命令参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-n 或 –number</td>
+<td>显示行数</td>
+</tr>
+<tr>
+<td>-b 或–number-nonblank</td>
+<td>显示行号，但是不对空白行进行编号</td>
+</tr>
+<tr>
+<td>-s 或–squeeze-blank</td>
+<td>当遇到有连续两行以上的空白行，只显示一行的空白行</td>
+</tr>
+</tbody></table>
+<p>命令使用示例：</p>
+<p>1、将一个自增序列写入 test.txt 文件中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(<span class="hljs-built_in">seq</span> 1 10); <span class="hljs-keyword">do</span> <span class="hljs-built_in">echo</span> <span class="hljs-variable">$i</span> &gt;&gt; test.txt ; <span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
+<p>2、查看文件内容。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">cat</span> <span class="hljs-keyword">test</span>.txt<br></code></pre></td></tr></table></figure>
+
+<p>3、命令输出结果：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs stata">root@<span class="hljs-keyword">local</span> # <span class="hljs-keyword">cat</span> <span class="hljs-keyword">test</span>.txt<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br></code></pre></td></tr></table></figure>
+
+<p>4、将文件内容清空。</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">cat <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span> &gt; test.txt<br></code></pre></td></tr></table></figure>
+
+<p>5、再次检查文件内容。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">cat</span> <span class="hljs-keyword">test</span>.txt<br></code></pre></td></tr></table></figure>
+
+<p>命令输出结果：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stata">root@<span class="hljs-keyword">local</span> # <span class="hljs-keyword">cat</span> /dev/null &gt; <span class="hljs-keyword">test</span>.txt<br>root@<span class="hljs-keyword">local</span> # <span class="hljs-keyword">cat</span> <span class="hljs-keyword">test</span>.txt<br>root@<span class="hljs-keyword">local</span> # <br></code></pre></td></tr></table></figure>
+
+<h4 id="2-more"><a href="#2-more" class="headerlink" title="2.more"></a>2.more</h4><p>命令描述：more 命令从前向后分页显示文件内容。</p>
+<p>常用操作命令：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Enter</td>
+<td>向下 n 行，n 需要定义，默认为 1 行</td>
+</tr>
+<tr>
+<td>Ctrl+F 或空格键（Space）</td>
+<td>向下滚动一页</td>
+</tr>
+<tr>
+<td>Ctrl+B</td>
+<td>向上滚动一页</td>
+</tr>
+<tr>
+<td>=</td>
+<td>输出当前行的行号</td>
+</tr>
+<tr>
+<td>!命令</td>
+<td>调用 Shell 执行命令</td>
+</tr>
+<tr>
+<td>q</td>
+<td>退出 more</td>
+</tr>
+</tbody></table>
+<p>命令使用示例：从第 20 行开始分页查看系统日志文件/var/log/messages。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">more</span> +2 /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/daily.<span class="hljs-keyword">out</span><br></code></pre></td></tr></table></figure>
+
+<p>命令输出结果：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs gradle">root@local ~ # more +<span class="hljs-number">2</span> <span class="hljs-regexp">/var/</span>log/daily.out<br>Thu Mar <span class="hljs-number">18</span> <span class="hljs-number">09</span>:<span class="hljs-number">54</span>:<span class="hljs-number">58</span> CST <span class="hljs-number">2021</span><br><br>Removing old temporary files:<br><br>Cleaning out old system announcements:<br><br>Removing stale files <span class="hljs-keyword">from</span> <span class="hljs-regexp">/var/</span>rwho:<br><br>Disk status:<br>Filesystem       <span class="hljs-keyword">Size</span>   Used  Avail Capacity iused      ifree %iused  Mounted on<br><span class="hljs-regexp">/dev/</span>disk1s5s1  <span class="hljs-number">233</span>Gi   <span class="hljs-number">14</span>Gi  <span class="hljs-number">150</span>Gi     <span class="hljs-number">9</span>%  <span class="hljs-number">568975</span> <span class="hljs-number">2447532345</span>    <span class="hljs-number">0</span>%   /<br><span class="hljs-regexp">/dev/</span>disk1s4    <span class="hljs-number">233</span>Gi  <span class="hljs-number">3.0</span>Gi  <span class="hljs-number">150</span>Gi     <span class="hljs-number">2</span>%       <span class="hljs-number">4</span> <span class="hljs-number">2448101316</span>    <span class="hljs-number">0</span>%   <span class="hljs-regexp">/System/</span>Volumes/VM<br><span class="hljs-regexp">/dev/</span>disk1s2    <span class="hljs-number">233</span>Gi  <span class="hljs-number">410</span>Mi  <span class="hljs-number">150</span>Gi     <span class="hljs-number">1</span>%    <span class="hljs-number">1563</span> <span class="hljs-number">2448099757</span>    <span class="hljs-number">0</span>%   <span class="hljs-regexp">/System/</span>Volumes/Preboot<br><span class="hljs-regexp">/dev/</span>disk1s6    <span class="hljs-number">233</span>Gi  <span class="hljs-number">2.3</span>Mi  <span class="hljs-number">150</span>Gi     <span class="hljs-number">1</span>%      <span class="hljs-number">16</span> <span class="hljs-number">2448101304</span>    <span class="hljs-number">0</span>%   <span class="hljs-regexp">/System/</span>Volumes/Update<br><span class="hljs-regexp">/dev/</span>disk1s1    <span class="hljs-number">233</span>Gi   <span class="hljs-number">65</span>Gi  <span class="hljs-number">150</span>Gi    <span class="hljs-number">31</span>%  <span class="hljs-number">467200</span> <span class="hljs-number">2447634120</span>    <span class="hljs-number">0</span>%   <span class="hljs-regexp">/System/</span>Volumes/Data<br><br>Network <span class="hljs-keyword">interface</span> status:<br>Name       Mtu   Network       Address            Ipkts Ierrs    Opkts Oerrs  Coll<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-less"><a href="#3-less" class="headerlink" title="3.less"></a>3.less</h4><p>命令描述：less 命令可以对文件或其它输出进行分页显示，与 moe 命令相似，但使用 less 可以随意浏览文件，而 more 仅能向前移动，却不能向后移动。</p>
+<p>命令格式：less [参数] 文件。</p>
+<p>命令参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-e</td>
+<td>当文件显示结束后，自动离开</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>显示类似 more 命令的百分比</td>
+</tr>
+<tr>
+<td>-N</td>
+<td>显示每行的行号</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>显示连续空行为一行</td>
+</tr>
+</tbody></table>
+<p>命令常用操作：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/字符串</td>
+<td>向下搜索字符串</td>
+</tr>
+<tr>
+<td>?字符串</td>
+<td>向上搜索字符串</td>
+</tr>
+<tr>
+<td>n</td>
+<td>重复前一个搜索</td>
+</tr>
+<tr>
+<td>N</td>
+<td>反向重复前一个搜索</td>
+</tr>
+<tr>
+<td>b 或 pageup 键</td>
+<td>向上翻一页</td>
+</tr>
+<tr>
+<td>空格键或 pagedown 键</td>
+<td>向下翻一页</td>
+</tr>
+<tr>
+<td>u</td>
+<td>向前翻半页</td>
+</tr>
+<tr>
+<td>d</td>
+<td>向后翻半页</td>
+</tr>
+<tr>
+<td>y</td>
+<td>向前滚动一行</td>
+</tr>
+<tr>
+<td>回车键</td>
+<td>向后滚动一行</td>
+</tr>
+<tr>
+<td>q</td>
+<td>退出 less 命令</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： 查看命令历史使用记录并通过 less 分页显示。</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">history <span class="hljs-string">| less</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="4-head"><a href="#4-head" class="headerlink" title="4.head"></a>4.head</h4><p>命令描述：head 命令用于查看文件开头指定行数的内容。 </p>
+<p>命令格式：head [参数] [文件]。</p>
+<p>命令参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-n [行数]</td>
+<td>显示开头指定行的文件内容，默认为 10</td>
+</tr>
+<tr>
+<td>-c [字符串]</td>
+<td>显示开头指定个数的字符数</td>
+</tr>
+<tr>
+<td>-q</td>
+<td>不显示文件名字信息，适用于多个文件，多文件时默认会显示文件名</td>
+</tr>
+</tbody></table>
+<p>命令使用示例：</p>
+<ul>
+<li> 查看/etc/passwd 文件的前 5 行内容。</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">head -<span class="hljs-number">5</span> <span class="hljs-regexp">/etc/</span>passwd<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>命令输出结果：</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">root</span>@local ~ # head -<span class="hljs-number">5</span> /etc/passwd<br><span class="hljs-comment">##</span><br><span class="hljs-comment"># User Database</span><br><span class="hljs-comment"># </span><br><span class="hljs-comment"># Note that this file is consulted directly only when the system is running</span><br><span class="hljs-comment"># in single-user mode.  At other times this information is provided by</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="5-tail"><a href="#5-tail" class="headerlink" title="5.tail"></a>5.tail</h4><p>命令描述：tail 命令用于查看文档的后 N 行或持续刷新内容。 </p>
+<p>命令格式：tail [参数] [文件]。 </p>
+<p>命令参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-f</td>
+<td>显示文件最新追加的内容</td>
+</tr>
+<tr>
+<td>-q</td>
+<td>当有多个文件参数时，不输出各个文件名</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>当有多个文件参数时，总是输出各个文件名</td>
+</tr>
+<tr>
+<td>-c [字节数]</td>
+<td>显示文件的尾部 n 个字节内容</td>
+</tr>
+<tr>
+<td>-n [行数]</td>
+<td>显示文件的尾部 n 行内容</td>
+</tr>
+</tbody></table>
+<p>命令使用示例：查看/var/log/messages 系统日志文件的最新 10 行，并保持实时刷新。</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs excel">tail -f -<span class="hljs-built_in">n</span> <span class="hljs-number">10</span> /<span class="hljs-built_in">var</span>/<span class="hljs-built_in">log</span>/messages<br></code></pre></td></tr></table></figure>
+
+<p>注：按 ctrl+c 键退出文本实时查看界面。</p>
+<h4 id="6-stat"><a href="#6-stat" class="headerlink" title="6.stat"></a>6.stat</h4><p>命令描述：用来显示文件的详细信息，包括 inode、atime、mtime、ctime 等。 </p>
+<p>命令使用示例： 查看/etc/passwd 文件的详细信息。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">stat <span class="hljs-regexp">/etc/</span>passwd<br></code></pre></td></tr></table></figure>
+
+<h4 id="7-wc"><a href="#7-wc" class="headerlink" title="7.wc"></a>7.wc</h4><p>命令描述：wc 命令用于统计指定文本的行数、字数、字节数。 </p>
+<p>命令格式：wc [参数] [文件]。 </p>
+<p>命令参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-l</td>
+<td>只显示行数</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>只显示单词数</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>只显示字节数</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： 统计/etc/passwd 文件的行数。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wc -l <span class="hljs-regexp">/etc/</span>passwd<br></code></pre></td></tr></table></figure>
+
+<p>命令输出结果： </p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle">root@root ~ # wc -l <span class="hljs-regexp">/etc/</span>passwd<br><span class="hljs-number">120</span> <span class="hljs-regexp">/etc/</span>passwd<br></code></pre></td></tr></table></figure>
+
+<h4 id="8-file"><a href="#8-file" class="headerlink" title="8.file"></a>8.file</h4><p>命令描述：file 命令用于辨识文件类型。 </p>
+<p>命令格式：file [参数] [文件]。 </p>
+<p>命令参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-b</td>
+<td>列出辨识结果时，不显示文件名称</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>详细显示指令执行过程，便于排错或分析程序执行的情形</td>
+</tr>
+<tr>
+<td>-f [文件]</td>
+<td>指定名称文件，其内容有一个或多个文件名称时，让 file 依序辨识这些文件，格式为每列一个文件名称</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>直接显示符号连接所指向的文件类别</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： 查看/var/log/messages 文件的文件类型。</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">file</span> <span class="hljs-regexp">/var/</span>log/messages<br></code></pre></td></tr></table></figure>
+
+<h4 id="9-diff"><a href="#9-diff" class="headerlink" title="9.diff"></a>9.diff</h4><p>命令描述：diff 命令用于比较文件的差异。 </p>
+<p>命令使用示例： </p>
+<p>1、构造两个相似的文件</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">echo -e &#x27;第一行<span class="hljs-symbol">\n</span> 第二行<span class="hljs-symbol">\n</span> 我是 log1 第 3 行<span class="hljs-symbol">\n</span> 第四行<span class="hljs-symbol">\n</span> 第五行<span class="hljs-symbol">\n</span> 第六行&#x27; &gt; 1.log<br>echo -e &#x27;第一行<span class="hljs-symbol">\n</span> 第二行<span class="hljs-symbol">\n</span> 我是 log2 第 3 行<span class="hljs-symbol">\n</span> 第四行&#x27; &gt; 2.log<br></code></pre></td></tr></table></figure>
+
+<p>2、分别查看两个文件</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-built_in">cat</span> <span class="hljs-number">1.</span><span class="hljs-built_in">log</span><br><span class="hljs-built_in">cat</span> <span class="hljs-number">2.</span><span class="hljs-built_in">log</span><br></code></pre></td></tr></table></figure>
+
+<p>3、使用 diff 查看两个文件的差异</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">root@root ~% diff 1.log 2.log<br>3c3<br><span class="hljs-section">&lt;  我是 log1 第 3 行</span><br><span class="hljs-section">---</span><br>&gt;  我是 log2 第 3 行<br>5,6d4<br>&lt;  第五行<br>&lt;  第六行<br></code></pre></td></tr></table></figure>
+
+<p>对比结果中的 3c3 表示两个文件在第 3 行有不同，5,6d4 表示 2.log 文件相比 1.log 文件在第 4 行处开始少了 1.log 文件的第 5 和第 6 行。</p>
+<h3 id="2-文本文件处理命令"><a href="#2-文本文件处理命令" class="headerlink" title="(2)文本文件处理命令"></a>(2)文本文件处理命令</h3><h4 id="1-grep"><a href="#1-grep" class="headerlink" title="1.grep"></a>1.grep</h4><p>命令描述：grep 命令用于查找文件里符合条件的字符串。 </p>
+<p>grep 全称是 Global Regular Expression Print，表示全局正则表达式版本，它能使用正则表达式搜索文本，并把匹配的行打印出来。 </p>
+<p>在 Shell 脚本中，grep 通过返回一个状态值来表示搜索的状态： </p>
+<ul>
+<li>0：匹配成功。</li>
+<li>1：匹配失败。</li>
+<li>2：搜索的文件不存在。</li>
+<li>命令格式：grep [参数] [正则表达式] [文件]。</li>
+</ul>
+<p>常用参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c 或–count</td>
+<td>计算符合样式的列数</td>
+</tr>
+<tr>
+<td>-d recurse 或-r</td>
+<td>指定要查找的是目录而非文件</td>
+</tr>
+<tr>
+<td>-e [范本样式]</td>
+<td>指定字符串做为查找文件内容的样式</td>
+</tr>
+<tr>
+<td>-E 或 –extended-regexp</td>
+<td>将样式为延伸的正则表达式来使用</td>
+</tr>
+<tr>
+<td>-G 或 –basic-regexp</td>
+<td>将样式视为普通的表示法来使用</td>
+</tr>
+<tr>
+<td>-i 或 –ignore-case</td>
+<td>忽略字符大小写的差别</td>
+</tr>
+<tr>
+<td>-n 或 –line-number</td>
+<td>在显示符合样式的那一行之前，标示出该行的列数编号</td>
+</tr>
+<tr>
+<td>-v 或 –revert-match</td>
+<td>显示不包含匹配文本的所有行</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>查看 sshd 服务配置文件中监听端口配置所在行编号。</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">grep</span> -n Port <span class="hljs-regexp">/etc/</span>ssh/ssh_config<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查询字符串在文本中出现的行数。</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">grep</span> -c localhost <span class="hljs-regexp">/etc/</span>hosts<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>反向查找，不显示符合条件的行。</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">ps</span> -ef | <span class="hljs-keyword">grep</span> sshd<br><span class="hljs-keyword">ps</span> -ef | <span class="hljs-keyword">grep</span> -v <span class="hljs-keyword">grep</span> | <span class="hljs-keyword">grep</span> sshd<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>以递归的方式查找目录下含有关键字的文件。</li>
+</ul>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">grep -r *<span class="hljs-string">.sh</span> <span class="hljs-string">/etc</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用正则表达式匹配 httpd 配置文件中异常状态码响应的相关配置。</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">grep</span> <span class="hljs-string">&#x27;ntp[0-9].aliyun.com&#x27;</span> <span class="hljs-regexp">/etc/</span>ntp.conf<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-sed"><a href="#2-sed" class="headerlink" title="2.sed"></a>2.sed</h4><p>命令描述：sed 是一种流编辑器，它是文本处理中非常中的工具，能够完美的配合正则表达式使用。</p>
+<p>1、处理时，把当前处理的行存储在临时缓冲区中，称为模式空间（pattern space）。 </p>
+<p>2、接着用 sed 命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。 </p>
+<p>3、接着处理下一行，这样不断重复，直到文件末尾。</p>
+<p>注意：</p>
+<ul>
+<li>sed 命令不会修改原文件，例如删除命令只表示某些行不打印输出，而不是从原文件中删去。</li>
+<li>如果要改变源文件，需要使用-i 选项。</li>
+<li>命令格式：sed [参数] [动作] [文件]。</li>
+</ul>
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-e [script]</td>
+<td>执行多个 script</td>
+</tr>
+<tr>
+<td>-f [script 文件]</td>
+<td>执行指定 script 文件</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>仅显示 script 处理后的结果</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>输出到原文件，静默执行（修改原文件）</td>
+</tr>
+</tbody></table>
+<p>动作说明：</p>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a</td>
+<td>在行后面增加内容</td>
+</tr>
+<tr>
+<td>c</td>
+<td>替换行</td>
+</tr>
+<tr>
+<td>d</td>
+<td>删除行</td>
+</tr>
+<tr>
+<td>i</td>
+<td>在行前面插入</td>
+</tr>
+<tr>
+<td>p</td>
+<td>打印相关的行</td>
+</tr>
+<tr>
+<td>s</td>
+<td>替换内容</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>删除第 3 行到最后一行内容。</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sed <span class="hljs-string">&#x27;3,$d&#x27;</span> <span class="hljs-regexp">/etc/</span>passwd<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在最后一行新增行。</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sed <span class="hljs-string">&#x27;$a admin:x:1000:1000:admin:/home/admin:/bin/bash&#x27;</span> <span class="hljs-regexp">/etc/</span>passwd<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>替换内容。</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sed <span class="hljs-string">&#x27;s/SELINUX=disabled/SELINUX=enforcing/&#x27;</span> <span class="hljs-regexp">/etc/</span>selinux/config<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>替换行。</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sed <span class="hljs-string">&#x27;1c abcdefg&#x27;</span> <span class="hljs-regexp">/etc/</span>passwd<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-awk"><a href="#3-awk" class="headerlink" title="3.awk"></a>3.awk</h4><p>命令描述：和 sed 命令类似，awk 命令也是逐行扫描文件（从第 1 行到最后一行），寻找含有目标文本的行，如果匹配成功，则会在该行上执行用户想要的操作；反之，则不对行做任何处理。</p>
+<p>命令格式：awk [参数] [脚本] [文件]。</p>
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-F fs</td>
+<td>指定以 fs 作为输入行的分隔符，awk 命令默认分隔符为空格或制表符</td>
+</tr>
+<tr>
+<td>-f file</td>
+<td>读取 awk 脚本</td>
+</tr>
+<tr>
+<td>-v val=val</td>
+<td>在执行处理过程之前，设置一个变量 var，并给其设置初始值为 val</td>
+</tr>
+</tbody></table>
+<p>内置变量：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FS</td>
+<td>字段分隔符</td>
+</tr>
+<tr>
+<td>$n</td>
+<td>指定分隔的第 n 个字段，如$1、$3 分别表示第 1、第三列</td>
+</tr>
+<tr>
+<td>$0</td>
+<td>当前读入的整行文本内容</td>
+</tr>
+<tr>
+<td>NF</td>
+<td>记录当前处理行的字段个数（列数）</td>
+</tr>
+<tr>
+<td>NR</td>
+<td>记录当前已读入的行数</td>
+</tr>
+<tr>
+<td>FNR</td>
+<td>当前行在源文件中的行号</td>
+</tr>
+</tbody></table>
+<p>awk 中还可以指定脚本命令的运行时机。默认情况下，awk 会从输入中读取一行文本，然后针对该行的数据执行程序脚本，但有时可能需要在处理数据前运行一些脚本命令，这就需要使用BEGIN 关键字，BEGIN 会在 awsk 读取数据前强制执行该关键字后指定的脚本命令。</p>
+<p>和 BEGIN 关键字相对应，END 关键字允许我们指定一些脚本命令，awk 会在读完数据后执行它们.</p>
+<p>命令使用示例： </p>
+<ul>
+<li>查看本机 IP 地址。</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ifconfig</span> eth0 |awk <span class="hljs-string">&#x27;/inet/&#123;print <span class="hljs-variable">$2</span>&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查看本机剩余磁盘容量。</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">df</span> -h |awk <span class="hljs-string">&#x27;/\/$/&#123;print <span class="hljs-variable">$4</span>&#125;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>统计系统用户个数。</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">awk -F: <span class="hljs-string">&#x27;$3&lt;1000&#123;x++&#125; END&#123;print x&#125;&#x27;</span> <span class="hljs-regexp">/etc/</span>passwd<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>输出其中登录 Shell 不以 nologin 结尾（对第 7 个字段做!~反向匹配）的用户名、登录 Shell 信息.</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">awk</span> -F: <span class="hljs-string">&#x27;<span class="hljs-variable">$7</span>!~/nologin$/&#123;print <span class="hljs-variable">$1</span>,<span class="hljs-variable">$7</span>&#125;&#x27;</span> /etc/passwd<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>输出/etc/passwd 文件中前三行记录的用户名和用户 uid。</li>
+</ul>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata">head -3 /etc/passwd | awk &#x27;BEGIN&#123;FS=<span class="hljs-string">&quot;:&quot;</span>;<span class="hljs-keyword">print</span> <span class="hljs-string">&quot;name\tuid&quot;</span>&#125;&#123;<span class="hljs-keyword">print</span> <span class="hljs-variable">$1</span>,<span class="hljs-string">&quot;\t&quot;</span><span class="hljs-variable">$3&#125;</span>END&#123;<span class="hljs-keyword">print</span> <span class="hljs-string">&quot;sum lines &quot;</span>NR&#125;&#x27;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查看 tcp 连接数。 </li>
+</ul>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cos">netstat -na | awk &#x27;/<span class="hljs-symbol">^tcp</span>/ &#123;++<span class="hljs-keyword">S</span>[<span class="hljs-built_in">$NF</span>]&#125; END &#123;<span class="hljs-keyword">for</span>(a in <span class="hljs-keyword">S</span>) <span class="hljs-keyword">print</span> a, <span class="hljs-keyword">S</span>[a]&#125;&#x27;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>关闭指定服务的所有的进程。</li>
+</ul>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coq">ps -ef | <span class="hljs-type">grep</span> httpd | <span class="hljs-type">awk</span> &#123;&#x27;print $<span class="hljs-number">2</span>&#x27;&#125; | <span class="hljs-type">xargs</span> kill <span class="hljs-number">-9</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="4-cut"><a href="#4-cut" class="headerlink" title="4.cut"></a>4.cut</h4><p>命令描述：cut 命令主要用来切割字符串，可以对输入的数据进行切割然后输出。 </p>
+<p>命令格式：cut [参数] [文件]。</p>
+<p>参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-b</td>
+<td>以字节为单位进行分割</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>以字符为单位进行分割</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>自定义分隔符，默认为制表符</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>按字节进行切割。</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">root</span>@local ~ # echo <span class="hljs-string">&quot;Hello World&quot;</span> | cut -b <span class="hljs-number">1</span>,<span class="hljs-number">3</span>   <br><span class="hljs-attribute">Hl</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>按字符进行切割。</li>
+</ul>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autoit">root<span class="hljs-symbol">@local</span> ~ <span class="hljs-meta"># echo <span class="hljs-string">&quot;h和o&quot;</span> | cut -c 2  </span><br>和<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>按指定字符进行切割。</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">root</span>@local ~ # echo <span class="hljs-string">&quot;hello,world,ok&quot;</span> | cut -d , -f <span class="hljs-number">1</span>,<span class="hljs-number">3</span><br><span class="hljs-attribute">hello</span>,ok<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-tr"><a href="#5-tr" class="headerlink" title="5.tr"></a>5.tr</h4><p>命令描述：tr 命令用于对来自标准输入的字符进行替换、压缩和删除。 </p>
+<p>命令格式：tr [参数] [文本]。 </p>
+<p>参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>反选指定字符</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>删除指定字符</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>将重复的字符缩减成一个字符</td>
+</tr>
+<tr>
+<td>-t [第一字符集] [第二字符集]</td>
+<td>删除第一字符集较第二字符集多出的字符，使两个字符集长度相等</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>将输入字符由大写转换为小写。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;HELLO WORLD&quot;</span> | <span class="hljs-built_in">tr</span> <span class="hljs-string">&#x27;A-Z&#x27;</span> <span class="hljs-string">&#x27;a-z&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>删除字符。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;hello 123 world 456&quot;</span> | <span class="hljs-built_in">tr</span> -d <span class="hljs-string">&#x27;0-9&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>压缩字符。 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;thissss is a text linnnnnnne.&quot;</span> | <span class="hljs-built_in">tr</span> -s <span class="hljs-string">&#x27; sn&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>产生随机密码。 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> /dev/urandom | <span class="hljs-built_in">tr</span> -dc a-zA-Z0-9 | <span class="hljs-built_in">head</span> -c 13<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="三、常用系统工作命令"><a href="#三、常用系统工作命令" class="headerlink" title="三、常用系统工作命令"></a>三、常用系统工作命令</h2><h3 id="1-echo"><a href="#1-echo" class="headerlink" title="1.echo"></a>1.echo</h3><p>命令描述：echo 命令用于在终端输出字符串或变量提取后的值。 </p>
+<p>命令格式：echo [字符串 | $变量]。 </p>
+<p>命令用法示例： </p>
+<p>1、显示普通字符串</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Hello World&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>2、显示变量</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">中定义一个临时变量 name ： <span class="hljs-built_in">export</span> <span class="hljs-attribute">name</span>=<span class="hljs-string">&quot;Tom&quot;</span><br>显示变量：echo <span class="hljs-variable">$name</span><br></code></pre></td></tr></table></figure>
+
+<p>3、显示结果定向至文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This is a test text.&quot;</span> &gt; test.txt<br></code></pre></td></tr></table></figure>
+
+<p>注：命令会将文本 This is a test text.输出重定向到文件 test.txt 中，如果文件已存在，将会覆盖文件内容，如果不存在则创建。其中&gt;符号表示输出重定向。如果您希望将文本追加到文件内容最后，而不是覆盖它，请使用&gt;&gt;输出追加重定向符号。</p>
+<p>4、显示命令执行结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> `<span class="hljs-built_in">pwd</span>`<br></code></pre></td></tr></table></figure>
+
+<p>注意：pwd 命令是用一对反引号（``）包裹，而不是一对单引号（’’）。使用$(command)形式可以达到相同效果。</p>
+<h3 id="2-date"><a href="#2-date" class="headerlink" title="2.date"></a>2.date</h3><p>命令描述：date 命令用于显示和设置系统的时间和日期。</p>
+<p>命令格式：date [选项] [+格式]。 </p>
+<p>其中，时间格式的部分控制字符解释如下：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%a</td>
+<td>当地时间的星期名缩写（例如： 日，代表星期日）</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>当地时间的星期名全称 （例如：星期日）</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>当地时间的月名缩写 （例如：一，代表一月）</td>
+</tr>
+<tr>
+<td>%B</td>
+<td>当地时间的月名全称 （例如：一月）</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>当地时间的日期和时间 （例如：2005 年 3 月 3 日 星期四 23:05:25）</td>
+</tr>
+<tr>
+<td>%C</td>
+<td>世纪；比如 %Y，通常为省略当前年份的后两位数字（例如：20）</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>按月计的日期（例如：01）</td>
+</tr>
+<tr>
+<td>%D</td>
+<td>按月计的日期；等于%m/%d/%y</td>
+</tr>
+<tr>
+<td>%F</td>
+<td>完整日期格式，等价于 %Y-%m-%d</td>
+</tr>
+<tr>
+<td>%j</td>
+<td>按年计的日期（001-366）</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>按年计的日期（001-366）</td>
+</tr>
+<tr>
+<td>%r</td>
+<td>当地时间下的 12 小时时钟时间 （例如：11:11:04 下午）</td>
+</tr>
+<tr>
+<td>%R</td>
+<td>24 小时时间的时和分，等价于 %H:%M</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>自 UTC 时间 1970-01-01 00:00:00 以来所经过的秒数</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>时间，等于%H:%M:%S</td>
+</tr>
+<tr>
+<td>%U</td>
+<td>一年中的第几周，以周日为每星期第一天（00-53）</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>当地时间下的日期描述 （例如：12/31/99）</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>当地时间下的时间描述 （例如：23:13:48）</td>
+</tr>
+<tr>
+<td>%w</td>
+<td>一星期中的第几日（0-6），0 代表周一</td>
+</tr>
+<tr>
+<td>%W</td>
+<td>一年中的第几周，以周一为每星期第一天（00-53）</td>
+</tr>
+</tbody></table>
+<p>命令用法示例： </p>
+<ul>
+<li>按照默认格式查看当前系统时间</li>
+</ul>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-built_in">date</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>按照指定格式查看当前系统时间 </li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs perl">date <span class="hljs-string">&quot;+%Y-%m-%d %H:%M:%S&quot;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>查看今天是当年中的第几天 </li>
+</ul>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-built_in">date</span> <span class="hljs-string">&quot;+%j&quot;</span> <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>将系统的当前时间设置为 2020 年 02 月 20 日 20 点 20 分 20 秒 </li>
+</ul>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-built_in">date</span> -s <span class="hljs-string">&quot;20200220 20:20:20&quot;</span> <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>校正系统时间，与网络时间同步 </li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">A</span>、安装 ntp 校时工具 <br>	yum -y install ntp <br><span class="hljs-selector-tag">B</span>、用 ntpdate 从时间服务器更新时间 <br>	ntpdate <span class="hljs-selector-tag">time</span><span class="hljs-selector-class">.nist</span><span class="hljs-selector-class">.gov</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-wget"><a href="#3-wget" class="headerlink" title="3.wget"></a>3.wget</h3><p>命令描述：在终端中下载文件。 </p>
+<p>命令格式：wget [参数] 下载地址。</p>
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-b</td>
+<td>后台下载</td>
+</tr>
+<tr>
+<td>-P</td>
+<td>下载到指定目录</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>最大重试次数</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>断点续传</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>下载页面内所有资源，包括图片、视频等</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>递归下载</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>下载一张图片到路径/root/static/img/中，-p 参数默认值为当前路径，如果指定路径不存在会自动创建。</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget -P <span class="hljs-regexp">/root/</span>static<span class="hljs-regexp">/img/</span> http:<span class="hljs-regexp">//img</span>.alicdn.com<span class="hljs-regexp">/tfs/</span>TB1.R._t7L0gK0jSZFxXXXWHVXa-<span class="hljs-number">2666</span>-<span class="hljs-number">1500</span>.png<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-ps"><a href="#4-ps" class="headerlink" title="4.ps"></a>4.ps</h3><p>命令描述：ps 命令用于查看系统中的进程状态。 </p>
+<p>命令格式：ps [参数]。</p>
+<p>命令参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a</td>
+<td>显示现行终端机下的所有程序，包括其他用户的程序</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>以用户为主的格式来显示程序状况</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>显示没有控制终端的进程，同时显示各个命令的具体路径</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>列出程序时，显示每个程序所使用的环境变量</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>显示当前所有的进程</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>指定终端机编号，并列出属于该终端机的程序的状况</td>
+</tr>
+</tbody></table>
+<p>命令使用示例：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">root</span>@root ~ # ps -ef | grep sshd<br><span class="hljs-attribute">501</span> <span class="hljs-number">21963</span> <span class="hljs-number">86819</span>   <span class="hljs-number">0</span>  <span class="hljs-number">1</span>:<span class="hljs-number">56</span>下午 ttys000    <span class="hljs-number">0</span>:<span class="hljs-number">00</span>.<span class="hljs-number">00</span> grep sshd<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-top"><a href="#5-top" class="headerlink" title="5.top"></a>5.top</h3><p>命令描述：top 命令动态地监视进程活动与系统负载等信息。 </p>
+<p>命令使用示例： </p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">root</span>@root ~ # top<br><br><span class="hljs-attribute">Processes</span>: <span class="hljs-number">324</span> total, <span class="hljs-number">4</span> running, <span class="hljs-number">320</span> sleeping, <span class="hljs-number">1891</span> threads            <span class="hljs-number">13</span>:<span class="hljs-number">59</span>:<span class="hljs-number">45</span><br><span class="hljs-attribute">Load</span> Avg: <span class="hljs-number">1</span>.<span class="hljs-number">77</span>, <span class="hljs-number">2</span>.<span class="hljs-number">53</span>, <span class="hljs-number">3</span>.<span class="hljs-number">43</span>  CPU usage: <span class="hljs-number">5</span>.<span class="hljs-number">78</span>% user, <span class="hljs-number">6</span>.<span class="hljs-number">98</span>% sys, <span class="hljs-number">87</span>.<span class="hljs-number">22</span>% idle<br><span class="hljs-attribute">SharedLibs</span>: <span class="hljs-number">266</span>M resident, <span class="hljs-number">38</span>M data, <span class="hljs-number">37</span>M linkedit.<br><span class="hljs-attribute">MemRegions</span>: <span class="hljs-number">121485</span> total, <span class="hljs-number">1341</span>M resident, <span class="hljs-number">51</span>M private, <span class="hljs-number">606</span>M shared.<br><span class="hljs-attribute">PhysMem</span>: <span class="hljs-number">8032</span>M used (<span class="hljs-number">1958</span>M wired), <span class="hljs-number">160</span>M unused.<br><span class="hljs-attribute">VM</span>: <span class="hljs-number">3230</span>G vsize, <span class="hljs-number">2322</span>M framework vsize, <span class="hljs-number">20790020</span>(<span class="hljs-number">0</span>) swapins, <span class="hljs-number">21375426</span>(<span class="hljs-number">0</span>) swapout<br><span class="hljs-attribute">Networks</span>: packets: <span class="hljs-number">4939487</span>/<span class="hljs-number">5981</span>M in, <span class="hljs-number">2388265</span>/<span class="hljs-number">1580</span>M out.<br><span class="hljs-attribute">Disks</span>: <span class="hljs-number">4293856</span>/<span class="hljs-number">127</span>G read, <span class="hljs-number">1752366</span>/<span class="hljs-number">104</span>G written.<br><br><span class="hljs-attribute">PID</span>    COMMAND      %CPU TIME     #TH   #WQ  #PORT MEM    PURG   CMPRS  PGRP<br><span class="hljs-attribute">96998</span>  wpsoffice    <span class="hljs-number">5</span>.<span class="hljs-number">2</span>  <span class="hljs-number">29</span>:<span class="hljs-number">56</span>.<span class="hljs-number">88</span> <span class="hljs-number">71</span>    <span class="hljs-number">1</span>    <span class="hljs-number">464</span>   <span class="hljs-number">1917</span>M  <span class="hljs-number">0</span>B     <span class="hljs-number">1520</span>M  <span class="hljs-number">96998</span><br><span class="hljs-attribute">54253</span>  wpscloudsvr  <span class="hljs-number">4</span>.<span class="hljs-number">3</span>  <span class="hljs-number">07</span>:<span class="hljs-number">26</span>.<span class="hljs-number">99</span> <span class="hljs-number">84</span>    <span class="hljs-number">1</span>    <span class="hljs-number">345</span>   <span class="hljs-number">55</span>M    <span class="hljs-number">0</span>B     <span class="hljs-number">36</span>M    <span class="hljs-number">54253</span><br><span class="hljs-attribute">140</span>    WindowServer <span class="hljs-number">3</span>.<span class="hljs-number">8</span>  <span class="hljs-number">01</span>:<span class="hljs-number">48</span>:<span class="hljs-number">34</span> <span class="hljs-number">13</span>/<span class="hljs-number">1</span>  <span class="hljs-number">5</span>    <span class="hljs-number">2322</span>+ <span class="hljs-number">812</span>M-  <span class="hljs-number">2828</span>K- <span class="hljs-number">140</span>M-  <span class="hljs-number">140</span><br><span class="hljs-attribute">23547</span>  top          <span class="hljs-number">3</span>.<span class="hljs-number">5</span>  <span class="hljs-number">00</span>:<span class="hljs-number">00</span>.<span class="hljs-number">97</span> <span class="hljs-number">1</span>/<span class="hljs-number">1</span>   <span class="hljs-number">0</span>    <span class="hljs-number">29</span>+   <span class="hljs-number">4080</span>K  <span class="hljs-number">0</span>B     <span class="hljs-number">0</span>B     <span class="hljs-number">23547</span><br><span class="hljs-attribute">25997</span>  Terminal     <span class="hljs-number">2</span>.<span class="hljs-number">6</span>  <span class="hljs-number">03</span>:<span class="hljs-number">49</span>.<span class="hljs-number">54</span> <span class="hljs-number">11</span>    <span class="hljs-number">5</span>    <span class="hljs-number">344</span>   <span class="hljs-number">59</span>M-   <span class="hljs-number">10</span>M+   <span class="hljs-number">14</span>M    <span class="hljs-number">25997</span><br><span class="hljs-attribute">0</span>      kernel_task  <span class="hljs-number">2</span>.<span class="hljs-number">1</span>  <span class="hljs-number">66</span>:<span class="hljs-number">32</span>.<span class="hljs-number">59</span> <span class="hljs-number">178</span>/<span class="hljs-number">4</span> <span class="hljs-number">0</span>    <span class="hljs-number">0</span>     <span class="hljs-number">1138</span>M- <span class="hljs-number">0</span>B     <span class="hljs-number">0</span>B     <span class="hljs-number">0</span><br><span class="hljs-attribute">94</span>     diskarbitrat <span class="hljs-number">1</span>.<span class="hljs-number">7</span>  <span class="hljs-number">02</span>:<span class="hljs-number">28</span>.<span class="hljs-number">59</span> <span class="hljs-number">2</span>     <span class="hljs-number">1</span>    <span class="hljs-number">247</span>+  <span class="hljs-number">1224</span>K  <span class="hljs-number">0</span>B     <span class="hljs-number">548</span>K   <span class="hljs-number">94</span><br><span class="hljs-attribute">402</span>    QQ           <span class="hljs-number">1</span>.<span class="hljs-number">6</span>  <span class="hljs-number">32</span>:<span class="hljs-number">42</span>.<span class="hljs-number">66</span> <span class="hljs-number">35</span>    <span class="hljs-number">16</span>   <span class="hljs-number">1043</span>  <span class="hljs-number">414</span>M   <span class="hljs-number">16</span>K    <span class="hljs-number">341</span>M   <span class="hljs-number">402</span><br><span class="hljs-attribute">451</span>    QQLive       <span class="hljs-number">1</span>.<span class="hljs-number">6</span>  <span class="hljs-number">37</span>:<span class="hljs-number">37</span>.<span class="hljs-number">05</span> <span class="hljs-number">78</span>    <span class="hljs-number">12</span>   <span class="hljs-number">1006</span>  <span class="hljs-number">492</span>M   <span class="hljs-number">0</span>B     <span class="hljs-number">376</span>M   <span class="hljs-number">451</span><br><span class="hljs-attribute">1</span>      launchd      <span class="hljs-number">1</span>.<span class="hljs-number">0</span>  <span class="hljs-number">03</span>:<span class="hljs-number">15</span>.<span class="hljs-number">43</span> <span class="hljs-number">4</span>     <span class="hljs-number">3</span>    <span class="hljs-number">5037</span>+ <span class="hljs-number">26</span>M+   <span class="hljs-number">0</span>B     <span class="hljs-number">15</span>M-   <span class="hljs-number">1</span><br><span class="hljs-attribute">745</span>    LemonMonitor <span class="hljs-number">0</span>.<span class="hljs-number">8</span>  <span class="hljs-number">05</span>:<span class="hljs-number">36</span>.<span class="hljs-number">48</span> <span class="hljs-number">14</span>    <span class="hljs-number">5</span>    <span class="hljs-number">429</span>   <span class="hljs-number">30</span>M-   <span class="hljs-number">396</span>K+  <span class="hljs-number">16</span>M    <span class="hljs-number">745</span><br><span class="hljs-attribute">63936</span>  com.apple.We <span class="hljs-number">0</span>.<span class="hljs-number">4</span>  <span class="hljs-number">02</span>:<span class="hljs-number">55</span>.<span class="hljs-number">49</span> <span class="hljs-number">4</span>     <span class="hljs-number">2</span>    <span class="hljs-number">106</span>+  <span class="hljs-number">297</span>M+  <span class="hljs-number">0</span>B     <span class="hljs-number">198</span>M-  <span class="hljs-number">63936</span><br><span class="hljs-attribute">6784</span>   com.apple.We <span class="hljs-number">0</span>.<span class="hljs-number">3</span>  <span class="hljs-number">04</span>:<span class="hljs-number">13</span>.<span class="hljs-number">45</span> <span class="hljs-number">6</span>     <span class="hljs-number">1</span>    <span class="hljs-number">108</span>   <span class="hljs-number">147</span>M-  <span class="hljs-number">0</span>B     <span class="hljs-number">21</span>M    <span class="hljs-number">6784</span><br><span class="hljs-attribute">390</span>    cfprefsd     <span class="hljs-number">0</span>.<span class="hljs-number">3</span>  <span class="hljs-number">03</span>:<span class="hljs-number">47</span>.<span class="hljs-number">93</span> <span class="hljs-number">3</span>     <span class="hljs-number">2</span>    <span class="hljs-number">353</span>+  <span class="hljs-number">1572</span>K+ <span class="hljs-number">4096</span>B+ <span class="hljs-number">196</span>K   <span class="hljs-number">390</span><br></code></pre></td></tr></table></figure>
+
+<p>命令输出参数解释： </p>
+<p>以上命令输出视图中分为两个区域，一个统计信息区，一个进程信息区。 </p>
+<p>1、统计信息区 </p>
+<ul>
+<li>第一行信息依次为：系统时间、运行时间、登录终端数、系统负载（三个数值分别为 1 分钟、5 分钟、15 分钟内的平均值，数值越小意味着负载越低）。 </li>
+<li>第二行信息依次为：进程总数、运行中的进程数、睡眠中的进程数、停止的进程数、僵死的进程数。</li>
+<li>第三行信息依次为：用户占用资源百分比、系统内核占用资源百分比、改变过优先级的进程资源百分比、空闲的资源百分比等。</li>
+<li>第四行信息依次为：物理内存总量、内存使用量、内存空闲量、作为内核缓存的内存量。第五行信息依次为：虚拟内存总量、虚拟内存使用量、虚拟内存空闲量、预加载内存量。</li>
+</ul>
+<p>2、进程信息区</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PID</td>
+<td>进程 ID</td>
+</tr>
+<tr>
+<td>USER</td>
+<td>进程所有者的用户名</td>
+</tr>
+<tr>
+<td>PR</td>
+<td>进程优先级</td>
+</tr>
+<tr>
+<td>NI</td>
+<td>nice 值。负值表示高优先级，正值表示低优先级</td>
+</tr>
+<tr>
+<td>VIRT</td>
+<td>进程使用的虚拟内存总量，单位 kb</td>
+</tr>
+<tr>
+<td>RES</td>
+<td>进程使用的、未被换出的物理内存大小，单位 kb</td>
+</tr>
+<tr>
+<td>SHR</td>
+<td>共享内存大小，单位 kb</td>
+</tr>
+<tr>
+<td>S</td>
+<td>进程状态 D：不可中断的睡眠状态, R：正在运行, S：睡眠, T：停止, Z：僵尸进程</td>
+</tr>
+<tr>
+<td>%CPU</td>
+<td>上次更新到现在的 CPU 时间占用百分比</td>
+</tr>
+<tr>
+<td>%MEM</td>
+<td>进程使用的物理内存百分比</td>
+</tr>
+<tr>
+<td>TIME+</td>
+<td>进程使用的 CPU 时间总计，单位 1/100 秒</td>
+</tr>
+<tr>
+<td>COMMAND</td>
+<td>命令名</td>
+</tr>
+</tbody></table>
+<p>注：按 q 键退出监控页面。</p>
+<h3 id="6-pidof"><a href="#6-pidof" class="headerlink" title="6.pidof"></a>6.pidof</h3><p>命令描述：pidof 命令用于查询指定服务进程的 PID 值。 </p>
+<p>命令格式：pidof [服务名称]。 </p>
+<p>命令参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-s</td>
+<td>仅返回一个进程号</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>只显示运行在 root 目录下的进程，这个选项只对 root 用户有效</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>忽略指定进程号的进程</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>显示由脚本开启的进程</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>查询出 crond 服务下的所有进程 ID。 </li>
+</ul>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">pidof crond</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="7-kill"><a href="#7-kill" class="headerlink" title="7.kill"></a>7.kill</h3><p>命令描述：kill 命令用于终止指定 PID 的服务进程。 </p>
+<p>kill 可将指定的信息送至程序。预设的信息为 SIGTERM(15)，可将指定程序终止。若仍无法终止该程序，可使用 SIGKILL(9)信息尝试强制删除程序。 </p>
+<p>命令格式：kill [参数] [进程 PID]。 </p>
+<p>命令使用示例： </p>
+<p>删除 pid 为 1247 的进程。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">kill</span> -<span class="hljs-number">9</span> <span class="hljs-number">1247</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="8-killall"><a href="#8-killall" class="headerlink" title="8.killall"></a>8.killall</h3><p>命令描述：killall 命令用于终止指定名称的服务对应的全部进程。 </p>
+<p>命令格式：killall [进程名称]。 </p>
+<p>命令使用示例： </p>
+<p>删除 crond 服务下的所有进程。 </p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">killall crond</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="9-reboot"><a href="#9-reboot" class="headerlink" title="9.reboot"></a>9.reboot</h3><p>命令描述：reboot 命令用来重启系统。 </p>
+<p>命令格式：reboot [-n] [-w] [-d] [-f] [-i]。 </p>
+<p>命令参数说明： </p>
+<ul>
+<li>-n：保存数据后再重新启动系统。 </li>
+<li>-w：仅做测试，并不是真的将系统重新开机，只会把重新开机的数据写入记录文件/var/log/wtmp。 </li>
+<li>-d：重新启动时不把数据写入记录文件/var/tmp/wtmp。</li>
+<li>-f：强制重新开机，不调用 shutdown 指令的功能。</li>
+<li>-i：关闭网络设置之后再重新启动系统。 </li>
+</ul>
+<p>命令使用示例： </p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">reboot</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="10-poweroff"><a href="#10-poweroff" class="headerlink" title="10.poweroff"></a>10.poweroff</h3><p>命令描述：poweroff 命令用来关闭系统。 </p>
+<p>命令使用示例： </p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">poweroff</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="四、系统状态检测命令"><a href="#四、系统状态检测命令" class="headerlink" title="四、系统状态检测命令"></a>四、系统状态检测命令</h2><h3 id="1-ifconfig"><a href="#1-ifconfig" class="headerlink" title="1.ifconfig"></a>1.ifconfig</h3><p>命令描述：ifconfig 命令用于获取网卡配置与网络状态等信息。</p>
+<h3 id="2-uname"><a href="#2-uname" class="headerlink" title="2.uname"></a>2.uname</h3><p>命令描述：uname 命令用于查看系统内核与系统版本等信息。 </p>
+<p>命令语法：uname  [-amnrsv] [–help] [–version]</p>
+<p>命令使用示例： </p>
+<ul>
+<li>显示系统信息。 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">uname</span> -a <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>显示当前系统的硬件架构。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">uname</span> -i<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>显示操作系统发行编号。 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">uname</span> -r<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>显示操作系统名称。 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">uname</span> -s <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>显示主机名称。 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">uname</span> -n <br></code></pre></td></tr></table></figure>
+
+<h3 id="3-uptime"><a href="#3-uptime" class="headerlink" title="3.uptime"></a>3.uptime</h3><p>命令描述：uptime 用于查看系统的负载信息。 </p>
+<p>命令输出说明： </p>
+<table>
+<thead>
+<tr>
+<th>负载信息</th>
+<th>命令输出值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>当前服务器时间</td>
+<td>14:18</td>
+</tr>
+<tr>
+<td>当前服务器运行时长</td>
+<td>1day</td>
+</tr>
+<tr>
+<td>当前用户数</td>
+<td>2 users</td>
+</tr>
+<tr>
+<td>当前负载情况</td>
+<td>load average: 0.03, 0.04, 0.02（分别取 1min，5min，15min 的均值）</td>
+</tr>
+</tbody></table>
+<h3 id="4-free"><a href="#4-free" class="headerlink" title="4.free"></a>4.free</h3><p>命令描述：free 用于显示当前系统中内存的使用量信息。 </p>
+<p>命令语法：free  [-bkmotV] [-s &lt;间隔秒数&gt;]。 </p>
+<p>命令参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-b</td>
+<td>以 Byte 为单位显示内存使用情况</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>以 KB 为单位显示内存使用情况</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>以 MB 为单位显示内存使用情况</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>以合适的单位显示内存使用情况，最大为三位数，自动计算对应的单位值。</td>
+</tr>
+</tbody></table>
+<p>命令输出说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>total</td>
+<td>物理内存总数</td>
+</tr>
+<tr>
+<td>used</td>
+<td>已经使用的内存数</td>
+</tr>
+<tr>
+<td>free</td>
+<td>空间的内存数</td>
+</tr>
+<tr>
+<td>share</td>
+<td>多个进程共享的内存总额</td>
+</tr>
+<tr>
+<td>buff/cache</td>
+<td>应用使用内存数</td>
+</tr>
+<tr>
+<td>available</td>
+<td>可用的内存数</td>
+</tr>
+<tr>
+<td>Swap</td>
+<td>虚拟内存</td>
+</tr>
+</tbody></table>
+<h3 id="5-who"><a href="#5-who" class="headerlink" title="5.who"></a>5.who</h3><p>命令描述：who 命令显示关于当前在本地系统上的所有用户的信息。</p>
+<p>命令使用示例： </p>
+<ul>
+<li>显示当前登录系统的用户 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">who</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>显示用户登录来源</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">who</span> -l -H<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>只显示当前用户</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">who</span> -m -H<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>精简模式显示</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">who</span> -q<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-last"><a href="#6-last" class="headerlink" title="6.last"></a>6.last</h3><p>命令描述： last 命令用于显示用户最近登录信息。 </p>
+<p>命令使用示例：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">root</span>@root ~ # last<br><span class="hljs-attribute">root</span>  ttys000                   Sat Mar  <span class="hljs-number">5</span> <span class="hljs-number">12</span>:<span class="hljs-number">40</span>   still logged in<br><span class="hljs-attribute">root</span>  ttys000                   Sat Mar  <span class="hljs-number">5</span> <span class="hljs-number">12</span>:<span class="hljs-number">40</span> - <span class="hljs-number">12</span>:<span class="hljs-number">40</span>  (<span class="hljs-number">00</span>:<span class="hljs-number">00</span>)<br><span class="hljs-attribute">root</span>  ttys000                   Sat Mar  <span class="hljs-number">5</span> <span class="hljs-number">12</span>:<span class="hljs-number">12</span> - <span class="hljs-number">12</span>:<span class="hljs-number">12</span>  (<span class="hljs-number">00</span>:<span class="hljs-number">00</span>)<br><span class="hljs-attribute">root</span>  ttys000                   Sat Mar  <span class="hljs-number">5</span> <span class="hljs-number">11</span>:<span class="hljs-number">52</span> - <span class="hljs-number">11</span>:<span class="hljs-number">52</span>  (<span class="hljs-number">00</span>:<span class="hljs-number">00</span>)<br><span class="hljs-attribute">root</span>  ttys000                   Fri Mar  <span class="hljs-number">4</span> <span class="hljs-number">23</span>:<span class="hljs-number">04</span> - <span class="hljs-number">23</span>:<span class="hljs-number">04</span>  (<span class="hljs-number">00</span>:<span class="hljs-number">00</span>)<br><span class="hljs-attribute">root</span>  ttys000                   Fri Mar  <span class="hljs-number">4</span> <span class="hljs-number">22</span>:<span class="hljs-number">42</span> - <span class="hljs-number">22</span>:<span class="hljs-number">42</span>  (<span class="hljs-number">00</span>:<span class="hljs-number">00</span>)<br></code></pre></td></tr></table></figure>
+
+<p>注：由于这些信息都是以日志文件的形式保存在系统中，黑客可以很容易地对内容进行篡改，所以该命令输出的信息并不能作为服务器是否被入侵的依据。</p>
+<h3 id="7-history"><a href="#7-history" class="headerlink" title="7.history"></a>7.history</h3><p>命令描述：history 命令用于显示历史执行过的命令。 </p>
+<p>bash 默认记录 1000 条执行过的历史命令，被记录在~/.bash_history 文件中。 </p>
+<p>命令使用示例： </p>
+<ul>
+<li>显示最新 10 条执行过的命令。</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">history</span> <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>清除历史记录。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">history</span> -c<br></code></pre></td></tr></table></figure>
+
+<h2 id="五、磁盘管理命令"><a href="#五、磁盘管理命令" class="headerlink" title="五、磁盘管理命令"></a>五、磁盘管理命令</h2><h3 id="1-df命令"><a href="#1-df命令" class="headerlink" title="1.df命令"></a>1.df命令</h3><p>df 命令描述：该命令检查文件系统的磁盘空间占用情况。可以利用该命令来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。</p>
+<p>df 命令语法：df [参数] [目录或文件名]。 </p>
+<p>参数说明：</p>
+<ul>
+<li>-a 列出所有的文件系统，包括系统特有的/proc 等文件系统。 </li>
+<li>-k 以 KBytes 为单位，返回各文件系统容量。 </li>
+<li>-m 以 MBytes 为单位，返回各文件系统容量。 </li>
+<li>-h 以 GBytes、MBytes、KBytes 为单位，返回各文件系统容量。</li>
+<li>-H 以 M=1000K 取代 M=1024K 的进位方式显示各文件系统容量。 </li>
+<li>-T 显示文件系统类型。 </li>
+<li>-i 显示 inode 信息。</li>
+</ul>
+<p>df 命令使用示例： </p>
+<p>示例一：显示磁盘使用情况。 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">df</span><br></code></pre></td></tr></table></figure>
+
+<p>示例二：以 inode 模式来显示磁盘使用情况。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">df</span> -i<br></code></pre></td></tr></table></figure>
+
+<p>示例三：显示系统内的所有特殊文件格式、名称及磁盘使用情况。</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">df -<span class="hljs-keyword">aT</span><br></code></pre></td></tr></table></figure>
+
+<p>示例四：以 GBytes、MBytes、KBytes 等格式显示各文件系统容量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">df</span> -h<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-du命令"><a href="#2-du命令" class="headerlink" title="2.du命令"></a>2.du命令</h3><p>du 命令描述：查看磁盘使用空间。du 与 df 命令不同点在于，du 命令用于查看文件和目录磁盘的使用空间。</p>
+<p>du 命令语法：du [参数] [文件或目录名称]。 </p>
+<p>参数说明： </p>
+<ul>
+<li>-a 列出所有的文件与目录容量。 </li>
+<li>-h 以 G、M、K 为单位，返回容量。 </li>
+<li>-s 列出总量。</li>
+<li>列出不包括子目录下的总量。 </li>
+<li>-k 以 KBytes 为单位，返回容量。 </li>
+<li>-m 以 MBytes 为单位，返回容量。 </li>
+</ul>
+<p>du 命令使用示例： </p>
+<p>示例一：列出当前目录下的所有文件夹的容量。 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">du</span><br></code></pre></td></tr></table></figure>
+
+<p>示例二：列出当前目录下的所有文件夹和文件的容量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">du</span> -a<br></code></pre></td></tr></table></figure>
+
+<p>示例三：列出当前目录下的所有文件夹和文件的容量，并以 G、M、K 格式显示容量。 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">du</span> -ah<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-fdisk-命令"><a href="#3-fdisk-命令" class="headerlink" title="3.fdisk 命令"></a>3.fdisk 命令</h3><p>fdisk 命令描述：该命令用于磁盘分区。 </p>
+<p>fdisk 命令语法：fdisk [-l] 装置名称。 </p>
+<p>参数说明：</p>
+<ul>
+<li>-l 输出后面装置名称的所有的分区内容。若仅有 fdisk -l 时， 则系统将会把整个系统内能够搜寻到的装置的分区均列出来。</li>
+</ul>
+<p>fdisk 命令使用示例： </p>
+<p>示例一：列出系统所有装置的分区信息。</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">fdisk -l</span><br></code></pre></td></tr></table></figure>
+
+<p>示例二：列出系统中的根目录所在磁盘，并查阅该硬盘内的相关信息。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">A、执行命令，找出根目录所在磁盘名：df /<br>B、执行命令，对磁盘<span class="hljs-regexp">/dev/</span>vda 进行分区操作： fdisk <span class="hljs-regexp">/dev/</span>vda<br>C、执行命令，获取帮助：m  执行命令，查看磁盘状态： p<br>D、执行命令，不存储任何操作并离开：q<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-cmp命令"><a href="#4-cmp命令" class="headerlink" title="4.cmp命令"></a>4.cmp命令</h3><p>cmp 命令描述：该命令用于比较两个文件是否有差异。当相互比较的两个文件完全一样时，该指令不会显示任何信息。否则会标示出第一个不同之处的字符和列数编号。当不指定任何文件名称，或文件名为”-“，则 cmp 指令会从标准输入设备读取数据。</p>
+<p>cmp 命令语法：cmp  [-clsv] [-i &lt;字符数目&gt;] [–help] [第一个文件] [第二个文件]。 </p>
+<p>参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>除了标明差异处的十进制字码之外，一并显示该字符所对应字符。</td>
+</tr>
+<tr>
+<td>-i &lt;字符数目&gt;</td>
+<td>指定一个数目。</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>标示出所有不一样的地方。</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>不显示错误信息。</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示版本信息。</td>
+</tr>
+<tr>
+<td>–help</td>
+<td>在线帮助。</td>
+</tr>
+</tbody></table>
+<p>cmp 命令使用示例： </p>
+<ul>
+<li>A、执行如下命令，将一个自增序列 1-5 写入 test1.txt 文件中。 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(<span class="hljs-built_in">seq</span> 1 5); <span class="hljs-keyword">do</span> <span class="hljs-built_in">echo</span> <span class="hljs-variable">$i</span> &gt;&gt; test1.txt ; <span class="hljs-keyword">done</span> <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>B、执行如下命令，比较 test1.txt 文件和 test2.txt 文件是否相同。 </li>
+</ul>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">cmp</span> test1.txt test2.txt<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-file命令"><a href="#5-file命令" class="headerlink" title="5.file命令"></a>5.file命令</h3><p>file 命令描述：该命令用于辨识文件类型。 </p>
+<p>file 命令语法：file [参数] [文件]。 </p>
+<p>参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-b</td>
+<td>列出辨识结果时，不显示文件名称。</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>详细显示指令执行过程，便于排错或分析程序执行的情形。</td>
+</tr>
+<tr>
+<td>-f&lt;名称文件&gt;</td>
+<td>指定名称文件，其内容有一个或多个文件名称时，让 file 依序辨识这些文件，格式为每列一个文件名称。</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>直接显示符号连接所指向的文件的类别。</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示版本信息。</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>解读压缩文件的内容。</td>
+</tr>
+</tbody></table>
+<p>file 命令使用示例：</p>
+<ul>
+<li>A、执行如下命令，显示 test1.txt 文件类型。</li>
+</ul>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-built_in">file</span> test1.txt<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>B、执行如下命令，显示 test2.txt 文件类型并不显示文件名称。 </li>
+</ul>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-built_in">file</span> -b test2.txt<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-find命令"><a href="#6-find命令" class="headerlink" title="6.find命令"></a>6.find命令</h3><p>find 命令描述：该命令用来在指定目录下查找文件。任何位于参数之前的字符串都将被视为欲查找的目录名。如果使用该命令时，不设置任何参数，则 find 命令将在当前目录下查找子目录与文件。并且将查找到的子目录和文件全部进行显示。 </p>
+<p>find 命令语法：find [参数] [文件]。 </p>
+<p>参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-mount</td>
+<td>只检查和指定目录在同一个文件系统下的文件，避免列出其它文件系统中的文件。</td>
+</tr>
+<tr>
+<td>-amin n</td>
+<td>在过去 n 分钟内被读取过文件。</td>
+</tr>
+<tr>
+<td>-type c</td>
+<td>文件类型是 c 的文件。</td>
+</tr>
+<tr>
+<td>-cmin n</td>
+<td>在过去 n 分钟内被修改过。</td>
+</tr>
+<tr>
+<td>-name name</td>
+<td>查找文件名称为 name 的文件。</td>
+</tr>
+</tbody></table>
+<p>find 命令使用示例： </p>
+<ul>
+<li>A、执行如下命令，将当前目录及其子目录下所有文件后缀为.txt 的文件列出来。 </li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">find</span> . -name <span class="hljs-string">&quot;*.txt&quot;</span> <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>B、执行如下命令，查找系统中所有文件长度为 0 的普通文件，并列出它们的完整路径。 </li>
+</ul>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">find</span> / -<span class="hljs-built_in">type</span> f -<span class="hljs-built_in">size</span> <span class="hljs-number">0</span> -<span class="hljs-built_in">exec</span> ls -l &#123;&#125; \;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="六、文件目录管理命令"><a href="#六、文件目录管理命令" class="headerlink" title="六、文件目录管理命令"></a>六、文件目录管理命令</h2><h3 id="1-tree"><a href="#1-tree" class="headerlink" title="1.tree"></a>1.tree</h3><p>命令描述：tree 命令用于以树状图列出目录的内容。 </p>
+<p>tree 命令没有内置在系统中，使用 tree 命令需要执行以下命令来安装： </p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> -y tree <br></code></pre></td></tr></table></figure>
+
+<p>命令使用示例： </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">tree <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wallpapers/</span> <br></code></pre></td></tr></table></figure>
+
+<h3 id="2-ls"><a href="#2-ls" class="headerlink" title="2.ls"></a>2.ls</h3><p>命令描述： ls 命令用于显示指定工作目录下的内容。 </p>
+<p>命令格式：ls [参数] [目录名]。</p>
+<p>常用参数说明：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a</td>
+<td>显示所有文件及目录（包括隐藏文件）</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>将文件的权限、拥有者、文件大小等详细信息列出（ll 等同于 ls -l）</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>将文件反序列出（默认按英文字母正序）</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>将文件按创建时间正序列出</td>
+</tr>
+<tr>
+<td>-R</td>
+<td>递归遍历目录下文件</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>查看当前目录下的所有文件（包括隐藏文件）。 </li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">ls</span> -<span class="hljs-keyword">al</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-pwd"><a href="#3-pwd" class="headerlink" title="3.pwd"></a>3.pwd</h3><p>命令描述：获取当前工作目录的绝对路径。</p>
+<h3 id="4-cd"><a href="#4-cd" class="headerlink" title="4.cd"></a>4.cd</h3><p>命令描述：cd 命令用于切换工作目录。</p>
+<p>在路径表示中： </p>
+<ul>
+<li>一个半角句号（.）表示当前目录，例如路径./app/log 等同于 app/log。 </li>
+<li>两个半角句号（..）表示上级目录，例如路径/usr/local/../src 等同于/usr/src，其中 local 和 src 目录同级。</li>
+</ul>
+<p>注：cd 命令的默认参数为~，符号 ~ 表示当前用户的家目录，即在 root 用户登录时，命令 cd、cd ~和 cd /root 执行效果相同。</p>
+<h3 id="5-touch"><a href="#5-touch" class="headerlink" title="5.touch"></a>5.touch</h3><p>命令描述：touch 命令用于修改文件或者目录的时间属性，包括存取时间和更改时间。若文件不存在，系统会建立一个新的文件。 </p>
+<p>命令格式：touch [参数] [文件]。 </p>
+<p>参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>如果指定文件不存在，不会建立新文件</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>使用参考文件的时间记录</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>设置文件的时间记录</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>创建两个空文件。 </li>
+</ul>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">touch dem<span class="hljs-meta">o1</span>.txt dem<span class="hljs-meta">o2</span>.txt<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 demo1.txt 的时间记录为当前系统时间。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">touch</span> demo1.txt<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>更新 demo2.txt 的时间记录，使其和 demo1.txt 的时间记录相同。</li>
+</ul>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">touch -r dem<span class="hljs-meta">o1</span>.txt dem<span class="hljs-meta">o2</span>.txt<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-mkdir"><a href="#6-mkdir" class="headerlink" title="6.mkdir"></a>6.mkdir</h3><p>命令描述：mkdir 命令用于新建子目录。-p 参数确保目录名称存在，不存在的就新建一个。 </p>
+<p>命令使用示例： </p>
+<ul>
+<li>新建目录 a/b/c/d，并使用 tree 命令查看创建后的目录结构</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">mkdir -<span class="hljs-selector-tag">p</span> <span class="hljs-selector-tag">a</span>/<span class="hljs-selector-tag">b</span>/c/d<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-rm"><a href="#7-rm" class="headerlink" title="7.rm"></a>7.rm</h3><p>命令描述：rm 命令用于删除一个文件或者目录。 </p>
+<p>命令格式：rm [参数] [文件]。 </p>
+<p>参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-i</td>
+<td>删除前逐一询问确认</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>无需确认，直接删除</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>删除目录下所有文件</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>无需确认直接删除文件。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">rm</span> -rf demo*<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>无需确认直接删除目录 a 及其目录下所有子目录和文件。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">rm</span> -rf a<br></code></pre></td></tr></table></figure>
+
+<h3 id="8-cp"><a href="#8-cp" class="headerlink" title="8.cp"></a>8.cp</h3><p>命令描述： cp 命令主要用于复制文件或目录。 </p>
+<p>命令格式：cp [参数] [源文件] [目标文件]。 </p>
+<p>参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d</td>
+<td>复制时保留链接</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>覆盖已经存在的目标文件而不给出提示</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>覆盖前询问</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>除复制文件的内容外，还把修改时间和访问权限也复制到新文件中</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>复制目录及目录内的所有项目</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>将目录 c/d 中的所有内容复制到目录 a/b 下。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> -r c a/b<br></code></pre></td></tr></table></figure>
+
+<h3 id="9-mv"><a href="#9-mv" class="headerlink" title="9.mv"></a>9.mv</h3><p>命令描述： mv 命令用来为文件或目录改名、或将文件或目录移入其它位置。 </p>
+<p>命令格式：mv [参数] [源文件] [目标文件]。 </p>
+<p>参数说明： </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-i</td>
+<td>若指定目录已有同名文件，则先询问是否覆盖旧文件</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>如果目标文件已经存在，不会询问而直接覆盖</td>
+</tr>
+</tbody></table>
+<p>命令使用示例： </p>
+<ul>
+<li>将文件名 a.txt 改为 b.txt。</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">mv <span class="hljs-selector-tag">a</span><span class="hljs-selector-class">.txt</span> <span class="hljs-selector-tag">b</span>.txt<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>将 c 目录移动到 a/b/c/d/下。 </li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">mv c a<span class="hljs-regexp">/b/</span>c<span class="hljs-regexp">/d/</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>将当前目录内容全部移动到/tmp 目录中。</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">mv .<span class="hljs-regexp">/* /</span>tmp<br></code></pre></td></tr></table></figure>
+
+<h3 id="10-rename"><a href="#10-rename" class="headerlink" title="10.rename"></a>10.rename</h3><p>命令描述：rename 命令用字符串替换的方式批量改变文件名。rename 命令有 C 语言和 Perl语言两个版本，这里介绍 C 语言版本的 rename 命令，不支持正则表达式。</p>
+<p>命令使用示例： </p>
+<ul>
+<li>将当前目录下所有文件名中的字符串 demo 改为大写的字符串 DEMO。</li>
+</ul>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima"><span class="hljs-built_in">rename</span> <span class="hljs-built_in">demo</span> DEMO *<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>将当前目录下所有.txt 文件后缀都改为 text。 </li>
+</ul>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">rename <span class="hljs-string">.txt</span> <span class="hljs-string">.text</span> *<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="七、文件权限管理"><a href="#七、文件权限管理" class="headerlink" title="七、文件权限管理"></a>七、文件权限管理</h2><h4 id="ls-命令可以查看-Linux-系统上的文件、目录和设备的权限。"><a href="#ls-命令可以查看-Linux-系统上的文件、目录和设备的权限。" class="headerlink" title="ls 命令可以查看 Linux 系统上的文件、目录和设备的权限。"></a>ls 命令可以查看 Linux 系统上的文件、目录和设备的权限。</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">ls -l <span class="hljs-regexp">/boot/</span><br></code></pre></td></tr></table></figure>
+
+<p> ls -l 命令中显示的第一列就是文件权限信息，共 11 位字符，分 5 部分。</p>
+<ul>
+<li>第 1 位表示存档类型，d 表示目录，-表示一般文件。 </li>
+<li>第 2~4 位表示当前用户的权限（属主权限）。</li>
+<li>第 5~7 位表示同用户组的用户权限（属组权限）。 </li>
+<li>第 8~10 位表示不同用户组的用户权限（其他用户权限）。</li>
+<li>第 11 位是一个半角句号.，表示 SELinux 安全标签。</li>
+</ul>
+<p>注：用户权限每组三位，rwx 分别表示读、写、执行权限，对应八进制表示为 4、2、1。</p>
+<p>例如 efi 目录的 root 用户权限为 drwxr-xr-x.。 </p>
+<ul>
+<li>该目录对 root 用户具有读写和执行所有权限。 </li>
+<li>该目录对 root 组其他用户有读和执行权限。 </li>
+<li>该目录对其他用户有读和执行权限。 </li>
+</ul>
+<p>所以该权限表示对应八进制权限表示为： </p>
+<ul>
+<li>属主权限：4+2+1=7。 </li>
+<li>属组权限：4+1=5。 </li>
+<li>其他用户权限：4+1=5。</li>
+</ul>
+<p>即 755。 </p>
+<h3 id="1-chmod"><a href="#1-chmod" class="headerlink" title="1.chmod"></a>1.chmod</h3><p>chmod 命令用于修改文件权限 mode，-R 参数以递归方式对子目录和文件进行修改。 </p>
+<p>命令使用示例： </p>
+<ul>
+<li>1、新建名为 hello.sh 的 Shell 脚本，该脚本将会输出 Hello World。用 ll 命令可以看到新建的脚本没有执行权限，其权限用八进制表示为 644。 </li>
+</ul>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stata">root@<span class="hljs-keyword">local</span> ~ % echo <span class="hljs-string">&quot;echo &#x27;hello world&#x27;&quot;</span> &gt; hello.<span class="hljs-keyword">sh</span><br>root@<span class="hljs-keyword">local</span> ~ % <span class="hljs-keyword">ls</span> -<span class="hljs-keyword">l</span><br><span class="hljs-keyword">total</span> 4<br>-rw-r--r--   1 root  staff        19  3  5 20:10 hello.<span class="hljs-keyword">sh</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>2、将 hello.sh 文件增加属主的执行权限。</li>
+</ul>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stata">root@<span class="hljs-keyword">local</span> ~ % chmod <span class="hljs-keyword">u</span>+x hello.<span class="hljs-keyword">sh</span><br>root@<span class="hljs-keyword">local</span> ~ % <span class="hljs-keyword">ls</span> -<span class="hljs-keyword">l</span><br><span class="hljs-keyword">total</span> 4<br>-rwxr--r--   1 root  staff        19  3  5 20:10 hello.<span class="hljs-keyword">sh</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>3、将 hello.sh 文件撤销属主的执行权限。 </li>
+</ul>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stata">root@<span class="hljs-keyword">local</span> ~ % chmod <span class="hljs-keyword">u</span>-x hello.<span class="hljs-keyword">sh</span><br>root@<span class="hljs-keyword">local</span> ~ % <span class="hljs-keyword">ls</span> -<span class="hljs-keyword">l</span><br><span class="hljs-keyword">total</span> 4<br>-rw-r--r--   1 root  staff        19  3  5 20:10 hello.<span class="hljs-keyword">sh</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>4、将 hello.sh 文件权限修改为八进制表示的 744 权限。</li>
+</ul>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stata">root@<span class="hljs-keyword">local</span> ~ % chmod 744 hello.<span class="hljs-keyword">sh</span><br>root@<span class="hljs-keyword">local</span> ~ % <span class="hljs-keyword">ls</span> -<span class="hljs-keyword">l</span><br><span class="hljs-keyword">total</span> 4<br>-rwxr--r--   1 dinglong  staff        19  3  5 20:10 hello.<span class="hljs-keyword">sh</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>5、使用 bash 命令解释器执行 hello.sh 脚本文件。 </li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs typescript">root<span class="hljs-meta">@local</span> ~ % <span class="hljs-regexp">/bin/</span>bash hello.<span class="hljs-property">sh</span><br>hello world<br></code></pre></td></tr></table></figure>
+
+<p>注：u+x 表示增加属主的执行权限，u 表示属主，g 表示属组，o 表示其他，a 表示所有用户</p>
+<h3 id="2-chown"><a href="#2-chown" class="headerlink" title="2.chown"></a>2.chown</h3><p>chown 命令修改文件的属主和属组；-R 参数以递归方式对子目录和文件进行修改；ls -l 命令显示的第三列和第四列就是文件的属主和属组信息。</p>
+<p>命令使用示例： </p>
+<ul>
+<li>1、新建一个文本文件 test.txt，用 ll 命令可以看到该文件的属主和属组是 root。whoami 命令可以查看当前 Shell 环境登录的用户名。 </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">whomi<br><span class="hljs-built_in">touch</span> text.txt<br><span class="hljs-built_in">ls</span> -l<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>2、创建两个用户。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">useradd <span class="hljs-built_in">test</span> <br>useradd admin<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>3、修改 test.txt 文件的属主用户为 test。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chown</span> <span class="hljs-built_in">test</span> test.txt <br><span class="hljs-built_in">ls</span> -l<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>4、修改 test.txt 文件的属主和属组为 admin。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chown</span> admin:admin test.txt <br><span class="hljs-built_in">ls</span> -l<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-chgrp"><a href="#3-chgrp" class="headerlink" title="3.chgrp"></a>3.chgrp</h3><p>chgrp 命令用于修改文件的属组。 </p>
+<p>命令使用示例： </p>
+<ul>
+<li>将 test.txt 文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chgrp</span> root test.txt <br><span class="hljs-built_in">ls</span> -l<br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Linux/">Linux</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/07/nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">nginx反向代理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/04/Redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+                        <span class="hidden-mobile">Redis常用命令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/Latiy-125/Latiy-125.github.io" target="_blank" rel="nofollow noopener"><span>Latiy</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
