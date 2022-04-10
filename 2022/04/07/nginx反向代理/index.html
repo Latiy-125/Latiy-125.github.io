@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/adorn/nginx.png">
 <meta property="article:published_time" content="2022-04-07T10:40:27.000Z">
-<meta property="article:modified_time" content="2022-04-09T08:38:51.291Z">
+<meta property="article:modified_time" content="2022-04-10T14:20:40.437Z">
 <meta property="article:author" content="山上的清风">
 <meta property="article:tag" content="mac">
 <meta property="article:tag" content="docker">
@@ -204,7 +204,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.6k 字
+      3k 字
     </span>
   
 
@@ -213,7 +213,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14 分钟
+      25 分钟
     </span>
   
 
@@ -254,7 +254,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：2022年4月9日 下午
+                  本文最后更新于：2022年4月10日 晚上
                 
               </p>
             
@@ -271,7 +271,16 @@
 
 <h3 id="5-删除容器"><a href="#5-删除容器" class="headerlink" title="(5)删除容器"></a>(5)删除容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@root ～ % docker rm -f nginx-demo<br></code></pre></td></tr></table></figure>
 
-<h2 id="3、运行容器并挂载到本地"><a href="#3、运行容器并挂载到本地" class="headerlink" title="3、运行容器并挂载到本地"></a>3、运行容器并挂载到本地</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@root ～ % docker run --name nginx -v /private/mydata/nginx/conf:/usr/share/nginx/conf -v /private/mydata/nginx/html:/usr/share/nginx/html -v /private/mydata/nginx/logs:/usr/share/nginx/logs -p 80:80 -d nginx:perl<br></code></pre></td></tr></table></figure>
+<h2 id="3、运行容器并挂载到本地"><a href="#3、运行容器并挂载到本地" class="headerlink" title="3、运行容器并挂载到本地"></a>3、运行容器并挂载到本地</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">root@root ～ % docker run --name nginx <br>-v /private/mydata/nginx/conf:/etc/nginx -v /private/mydata/nginx/html:/usr/share/nginx/html <br>-v /private/mydata/nginx/logs:/var/log/nginx -p 80:80 -d nginx:perl<br></code></pre></td></tr></table></figure>
+
+<h2 id="4、挂载本地项目到nginx"><a href="#4、挂载本地项目到nginx" class="headerlink" title="4、挂载本地项目到nginx"></a>4、挂载本地项目到nginx</h2><h3 id="1-直接反向代理配置"><a href="#1-直接反向代理配置" class="headerlink" title="(1)直接反向代理配置"></a>(1)直接反向代理配置</h3><p>进入本地 /private/mydata/nginx/conf/conf.d 文件夹，修改default.conf文件</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">server &#123;<br>    listen       80;<br>    listen  [::]:80;<br>    #修改服务名<br>    server_name  gulimall.com;<br><br>    #access_log  /var/log/nginx/host.access.log  main;<br><br>    location / &#123;<br>        #配置prox_pass http://本机IP:端口号;<br>        proxy_pass  http://192.168.0.198:10000;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-负载均衡到网关"><a href="#2-负载均衡到网关" class="headerlink" title="(2)负载均衡到网关"></a>(2)负载均衡到网关</h3><p>进入本地 /private/mydata/nginx/conf/conf.d 文件夹，修改default.conf文件</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">server</span> &#123;<br>    <span class="hljs-attribute">listen</span>       <span class="hljs-number">80</span>;<br>    <span class="hljs-attribute">listen</span>  [::]:<span class="hljs-number">80</span>;<br>    <span class="hljs-comment">#修改服务名</span><br>    <span class="hljs-attribute">server_name</span>  gulimall.com;<br><br>    <span class="hljs-comment">#access_log  /var/log/nginx/host.access.log  main;</span><br><br>    <span class="hljs-section">location</span> / &#123;<br>    		<span class="hljs-comment">#配置请求头</span><br>        <span class="hljs-attribute">proxy_set_header</span>   Host  <span class="hljs-variable">$host</span>;<br>        <span class="hljs-comment">#配置prox_pass http://本机IP:端口号;</span><br>        <span class="hljs-attribute">proxy_pass</span>  http://gulimall;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>进入本地 /private/mydata/nginx/conf 文件夹，修改 nginx.conf 文件</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><br><span class="hljs-attribute">user</span>  nginx;<br><span class="hljs-attribute">worker_processes</span>  auto;<br><br><span class="hljs-attribute">error_log</span>  /var/log/nginx/<span class="hljs-literal">error</span>.log <span class="hljs-literal">notice</span>;<br><span class="hljs-attribute">pid</span>        /var/run/nginx.pid;<br><br><br><span class="hljs-section">events</span> &#123;<br>    <span class="hljs-attribute">worker_connections</span>  <span class="hljs-number">1024</span>;<br>&#125;<br><br><br><span class="hljs-section">http</span> &#123;<br>    <span class="hljs-attribute">include</span>       /etc/nginx/mime.types;<br>    <span class="hljs-attribute">default_type</span>  application/octet-stream;<br><br>    <span class="hljs-attribute">log_format</span>  main  <span class="hljs-string">&#x27;<span class="hljs-variable">$remote_addr</span> - <span class="hljs-variable">$remote_user</span> [<span class="hljs-variable">$time_local</span>] &quot;<span class="hljs-variable">$request</span>&quot; &#x27;</span><br>                      <span class="hljs-string">&#x27;<span class="hljs-variable">$status</span> <span class="hljs-variable">$body_bytes_sent</span> &quot;<span class="hljs-variable">$http_referer</span>&quot; &#x27;</span><br>                      <span class="hljs-string">&#x27;&quot;<span class="hljs-variable">$http_user_agent</span>&quot; &quot;<span class="hljs-variable">$http_x_forwarded_for</span>&quot;&#x27;</span>;<br><br>    <span class="hljs-attribute">access_log</span>  /var/log/nginx/access.log  main;<br><br>    <span class="hljs-attribute">sendfile</span>        <span class="hljs-literal">on</span>;<br>    <span class="hljs-comment">#tcp_nopush     on;</span><br><br>    <span class="hljs-attribute">keepalive_timeout</span>  <span class="hljs-number">65</span>;<br><br>    <span class="hljs-comment">#gzip  on;</span><br>    <span class="hljs-comment">#配置负载均衡到网关</span><br>    <span class="hljs-section">upstream</span> gulimall &#123;<br>    		<span class="hljs-comment">#配置服务   本机IP:网关端口;</span><br>				<span class="hljs-attribute">server</span> <span class="hljs-number">192.168.0.198:8888</span>;<br>    &#125;<br><br>    <span class="hljs-attribute">include</span> /etc/nginx/conf.d/<span class="hljs-regexp">*.conf</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h1 id="2、nginx在宿主机上反向代理"><a href="#2、nginx在宿主机上反向代理" class="headerlink" title="2、nginx在宿主机上反向代理"></a>2、nginx在宿主机上反向代理</h1><h2 id="1、安装（可以用-brew-安装）"><a href="#1、安装（可以用-brew-安装）" class="headerlink" title="1、安装（可以用 brew 安装）"></a>1、安装（可以用 brew 安装）</h2><figure class="highlight shell"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo brew install nginx<br></code></pre></td></tr></table></figure>
 
