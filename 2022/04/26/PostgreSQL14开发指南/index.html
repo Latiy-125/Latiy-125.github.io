@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="山上的清风">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1、终端启动psql1234567891011#进入容器admin@localhost % docker exec -it psql &#x2F;bin&#x2F;bashroot@06ee4b912368:&#x2F;# su - postgrespostgres@06ee4b912368:~$ psqlpsql (14.2 (Debian 14.2-1.pgdg110+1))Type &quot;help&quot; fo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL14开发指南">
+<meta property="og:url" content="http://example.com/2022/04/26/PostgreSQL14%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="Latiy博客">
+<meta property="og:description" content="1、终端启动psql1234567891011#进入容器admin@localhost % docker exec -it psql &#x2F;bin&#x2F;bashroot@06ee4b912368:&#x2F;# su - postgrespostgres@06ee4b912368:~$ psqlpsql (14.2 (Debian 14.2-1.pgdg110+1))Type &quot;help&quot; fo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-26T14:17:23.000Z">
+<meta property="article:modified_time" content="2022-04-30T13:57:16.961Z">
+<meta property="article:author" content="山上的清风">
+<meta property="article:tag" content="PostgreSQL">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>PostgreSQL14开发指南 - Latiy博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":false,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>山上的清风</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="PostgreSQL14开发指南">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      山上的清风
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-26 22:17" pubdate>
+        2022年4月26日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      44 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">PostgreSQL14开发指南</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2022年4月30日 晚上
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="1、终端启动psql"><a href="#1、终端启动psql" class="headerlink" title="1、终端启动psql"></a>1、终端启动psql</h1><figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">进入容器</span><br>admin@localhost % docker exec -it psql /bin/bash<br>root@06ee4b912368:/# su - postgres<br>postgres@06ee4b912368:~$ psql<br>psql (14.2 (Debian 14.2-1.pgdg110+1))<br>Type &quot;help&quot; for help.<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="language-bash">连接数据库</span><br>postgres=# \c testdb;<br>You are now connected to database &quot;testdb&quot; as user &quot;postgres&quot;.<br>testdb=# <br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="2、用户和角色"><a href="#2、用户和角色" class="headerlink" title="2、用户和角色"></a>2、用户和角色</h1><h2 id="1-创建角色"><a href="#1-创建角色" class="headerlink" title="1.创建角色"></a>1.创建角色</h2><p>使用 CREATE ROLE 语句创建角色：name 指定了要创建的角色名称</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> ROLE name;<br></code></pre></td></tr></table></figure>
+
+<p>psql 中的\du 命令，即显示当前数据库集群中已有的角色</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> rolname <span class="hljs-keyword">FROM</span> pg_roles;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-删除角色"><a href="#2-删除角色" class="headerlink" title="2.删除角色"></a>2.删除角色</h2><p>删除角色的语句如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> ROLE name;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="3、数据库"><a href="#3、数据库" class="headerlink" title="3、数据库"></a>3、数据库</h1><h2 id="1-创建数据库"><a href="#1-创建数据库" class="headerlink" title="1.创建数据库"></a>1.创建数据库</h2><p>\l 命令，即 查看已有的数据库：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> datname <span class="hljs-keyword">FROM</span> pg_database;<br></code></pre></td></tr></table></figure>
+
+<p>注：其中 template0 和 template1 是模板数据库，创建新的数据库时默认基于 template1 进行复制；postgres 数据库是为 postgres 用户创建的默认数据库。</p>
+<p>创建一个数据库：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> DATABASE name;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-修改数据库"><a href="#2-修改数据库" class="headerlink" title="2.修改数据库"></a>2.修改数据库</h2><p>修改数据库的属性和配置：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> DATABASE name action;<br></code></pre></td></tr></table></figure>
+
+<p>action 指定了要执行的修改操作，例如修改数据库的名称、所有者、默认表空间、数据库会话变量的默认值等等。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql">修改数据库的名称：<br><span class="hljs-keyword">ALTER</span> DATABASE dbname RENAME <span class="hljs-keyword">TO</span> newdb;<br>修改数据库的拥有者：<br><span class="hljs-keyword">ALTER</span> DATABASE dbname OWNER <span class="hljs-keyword">TO</span> username;<br>设置指定数据库的配置：<br><span class="hljs-keyword">ALTER</span> DATABASE dbname <span class="hljs-keyword">SET</span> configuration_parameter &#123; <span class="hljs-keyword">TO</span> <span class="hljs-operator">|</span> <span class="hljs-operator">=</span> &#125; &#123; <span class="hljs-keyword">value</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">DEFAULT</span> &#125;<br>还原默认配置：<br><span class="hljs-keyword">ALTER</span> DATABASE newdb RESET enable_indexscan;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-删除数据库"><a href="#3-删除数据库" class="headerlink" title="3.删除数据库"></a>3.删除数据库</h2><p>删除一个数据库：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> DATABASE [ IF <span class="hljs-keyword">EXISTS</span>] name;<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-管理模式"><a href="#4-管理模式" class="headerlink" title="4.管理模式"></a>4.管理模式</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sql">创建一个新的模式：<br><span class="hljs-keyword">CREATE</span> SCHEMA name;<br>创建模式并指定它的拥有者：<br><span class="hljs-keyword">CREATE</span> SCHEMA name <span class="hljs-keyword">AUTHORIZATION</span> username;<br>注：以 pg_开头的名称是系统保留的模式名称，用户无法创建这样的模式。<br><br>修改模式的名称：<br><span class="hljs-keyword">ALTER</span> SCHEMA name RENAME <span class="hljs-keyword">TO</span> new_name<br>修改模式的拥有者：<br><span class="hljs-keyword">ALTER</span> SCHEMA name OWNER <span class="hljs-keyword">TO</span> &#123; new_owner <span class="hljs-operator">|</span> <span class="hljs-built_in">CURRENT_USER</span> <span class="hljs-operator">|</span> <span class="hljs-built_in">SESSION_USER</span> &#125;<br><br>删除一个模式：<br><span class="hljs-keyword">DROP</span> SCHEMA name;<br>如果模式中存在其他对象，以上语句无法执行；需要先删除该模式中所有的对象，或者使用以下语句级联删除这些对象：<br><span class="hljs-keyword">DROP</span> SCHEMA name CASCADE;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="4、管理数据表"><a href="#4、管理数据表" class="headerlink" title="4、管理数据表"></a>4、管理数据表</h1><h2 id="1-创建表"><a href="#1-创建表" class="headerlink" title="1.创建表"></a>1.创建表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> table_name<br>(<br>column_name data_type column_constraint,<br>column_name data_type,<br>...,<br>table_constraint<br>);<br></code></pre></td></tr></table></figure>
+
+<p>该语句包含以下内容：</p>
+<ul>
+<li>首先，table_name 指定了新表的名称。</li>
+<li>括号内是字段的定义， column_name 是字段的名称， data_type 是它的类型，column_constraint 是可选的字段约束；多个字段使用逗号进行分隔。</li>
+<li>最后，table_constraint 是可选的表级约束。</li>
+</ul>
+<p>除了自己定义表的结构之外，PostgreSQL 还提供了另一个创建表的方法，就是通过一个查询的结果创建新表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> table_name<br><span class="hljs-keyword">AS</span> query;<br>或者<br><span class="hljs-keyword">SELECT</span> ...<br><span class="hljs-keyword">INTO</span> new_table<br><span class="hljs-keyword">FROM</span> ...;<br></code></pre></td></tr></table></figure>
+
+<h3 id="模式搜索路径"><a href="#模式搜索路径" class="headerlink" title="模式搜索路径"></a>模式搜索路径</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql">当前的搜索路径：<br><span class="hljs-keyword">SHOW</span> search_path;<br>修改默认的搜索路径：<br><span class="hljs-keyword">SET</span> search_path <span class="hljs-keyword">TO</span> 用户,模式名;<br></code></pre></td></tr></table></figure>
+
+<p>注：不指定的时候默认为当前用户的public模式下</p>
+<h2 id="2-修改表"><a href="#2-修改表" class="headerlink" title="2.修改表"></a>2.修改表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> name action;<br></code></pre></td></tr></table></figure>
+
+<p>其中的 action 表示要执行的操作。</p>
+<h3 id="1-添加字段"><a href="#1-添加字段" class="headerlink" title="(1)添加字段"></a>(1)添加字段</h3><p>命令如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name<br><span class="hljs-keyword">ADD</span> <span class="hljs-keyword">COLUMN</span> column_name data_type [column_constraint];<br></code></pre></td></tr></table></figure>
+
+<p>添加字段与创建表时的字段选项相同，包含字段名称、字段类型以及可选的约束(column_constraint)。</p>
+<h3 id="2-删除字段"><a href="#2-删除字段" class="headerlink" title="(2)删除字段"></a>(2)删除字段</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name<br><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">COLUMN</span> column_name;<br></code></pre></td></tr></table></figure>
+
+<p>注：如果该字段被其他对象（例如外键引用、</p>
+<p>视图、存储过程等）引用，无法直接删除；在 DROP 的最后加上 CASCADE 选项即可级联删除依赖的对象。</p>
+<h3 id="3-添加约束"><a href="#3-添加约束" class="headerlink" title="(3)添加约束"></a>(3)添加约束</h3><p>添加约束时通常使用表级约束语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">ADD</span> table_constraint;<br></code></pre></td></tr></table></figure>
+
+<p>对于非空约束（NOT NULL），可以使用以下语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">COLUMN</span> column_name <span class="hljs-keyword">SET</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-删除约束"><a href="#4-删除约束" class="headerlink" title="(4)删除约束"></a>(4)删除约束</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">CONSTRAINT</span> constraint_name [ RESTRICT <span class="hljs-operator">|</span> CASCADE ];<br></code></pre></td></tr></table></figure>
+
+<p>删除非空约束需要使用单独的语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">COLUMN</span> column_name <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-修改字段默认值"><a href="#5-修改字段默认值" class="headerlink" title="(5)修改字段默认值"></a>(5)修改字段默认值</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">COLUMN</span> column_name <span class="hljs-keyword">SET</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">value</span>;<br></code></pre></td></tr></table></figure>
+
+<p>删除已有的默认值：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">COLUMN</span> column_name <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">DEFAULT</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-修改字段数据类型"><a href="#6-修改字段数据类型" class="headerlink" title="(6)修改字段数据类型"></a>(6)修改字段数据类型</h3><p>隐式转换：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">COLUMN</span> column_name TYPE new_data_type;<br></code></pre></td></tr></table></figure>
+
+<p>使用 USING 执行显式转换：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">COLUMN</span> column_name TYPE new_data_type <span class="hljs-keyword">USING</span> expression;<br>注：expression<span class="hljs-operator">=</span><span class="hljs-operator">=</span>column_name::new_data_type<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-重命名字段"><a href="#7-重命名字段" class="headerlink" title="(7)重命名字段"></a>(7)重命名字段</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name RENAME <span class="hljs-keyword">COLUMN</span> column_name <span class="hljs-keyword">TO</span> new_column_name;<br></code></pre></td></tr></table></figure>
+
+<h3 id="8-重命名表"><a href="#8-重命名表" class="headerlink" title="(8)重命名表"></a>(8)重命名表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> table_name RENAME <span class="hljs-keyword">TO</span> new_name;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-删除表"><a href="#3-删除表" class="headerlink" title="3.删除表"></a>3.删除表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> [ IF <span class="hljs-keyword">EXISTS</span> ] name [ CASCADE <span class="hljs-operator">|</span> RESTRICT ];<br></code></pre></td></tr></table></figure>
+
+<p>如果被删除的表存在依赖于它的视图或外键约束，需要指定 CASCADE 选项执行级联删除</p>
+<h1 id="5、管理表空间"><a href="#5、管理表空间" class="headerlink" title="5、管理表空间"></a>5、管理表空间</h1><h2 id="1-创建表空间"><a href="#1-创建表空间" class="headerlink" title="1.创建表空间"></a>1.创建表空间</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span>SPACE tablespace_name<br>OWNER user_name<br>LOCATION <span class="hljs-string">&#x27;directory&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>表空间的名称不能以 pg_开头，它们是系统表空间的保留名称；LOCATION 参数必须指定绝对路径名，指定的目录必须是一个已经存在的空目录，PostgreSQL 操作系统用户（postgres）必须是该目录的拥有者，以便能够进行文件的读写。</p>
+<h2 id="2-修改表空间"><a href="#2-修改表空间" class="headerlink" title="2.修改表空间"></a>2.修改表空间</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql">表空间的重命名：<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span>SPACE name RENAME <span class="hljs-keyword">TO</span> new_name;<br>修改表空间的拥有者：<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span>SPACE name OWNER <span class="hljs-keyword">TO</span> &#123; new_owner <span class="hljs-operator">|</span> <span class="hljs-built_in">CURRENT_USER</span> <span class="hljs-operator">|</span> <span class="hljs-built_in">SESSION_USER</span> &#125;;<br>设置表空间的参数：<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span>SPACE name <span class="hljs-keyword">SET</span> ( tablespace_option <span class="hljs-operator">=</span> <span class="hljs-keyword">value</span> [, ... ] );<br><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span>SPACE name RESET ( tablespace_option [, ... ] );<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-删除表空间"><a href="#3-删除表空间" class="headerlink" title="3.删除表空间"></a>3.删除表空间</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> TABLESPACE [ IF <span class="hljs-keyword">EXISTS</span> ] name;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>简单事务实例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 开启事务</span><br><span class="hljs-keyword">begin</span>;<br><span class="hljs-comment">-- 插入一条数据</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> accounts(user_name, balance)<br><span class="hljs-keyword">values</span> (<span class="hljs-string">&#x27;UserC&#x27;</span>, <span class="hljs-number">2000</span>);<br><span class="hljs-comment">-- 查询表</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> accounts;<br><span class="hljs-comment">-- 新建保存点sv1</span><br><span class="hljs-keyword">savepoint</span> sv1;<br><span class="hljs-comment">-- 插入数据</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> accounts(user_name, balance)<br><span class="hljs-keyword">values</span> (<span class="hljs-string">&#x27;UserD&#x27;</span>, <span class="hljs-number">0</span>);<br><span class="hljs-comment">-- 回滚到保存点sv1</span><br><span class="hljs-keyword">ROLLBACK</span> <span class="hljs-keyword">TO</span> sv1;<br><span class="hljs-comment">-- 提交事务</span><br><span class="hljs-keyword">COMMIT</span>;<br></code></pre></td></tr></table></figure>
+
+<p>演示 PostgreSQL 默认级别（READ COMMITTED）时不会发生脏读，但是存在不可重复读、幻读和更新丢失问题：</p>
+<table>
+<thead>
+<tr>
+<th>事务1</th>
+<th>事务2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>begin;<br>SELECT balance<br>FROM accounts <br>WHERE id = 1;– 返回 6000</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>begin;<br>UPDATE accounts set balance = balance + 1000 <br>WHERE id = 1;<br>SELECT balance<br>FROM accounts<br>WHERE id = 1; – 返回 7000</td>
+</tr>
+<tr>
+<td>SELECT balance<br>FROM accounts<br>WHERE id = 1; – 仍然返回 6000，没有脏读</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>commit; – 提交事务</td>
+</tr>
+<tr>
+<td>SELECT balance<br>FROM accounts<br>WHERE id = 1; – 此时返回 7000，出现不可重复读</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SELECT * FROM accounts WHERE id=4;– 返回UserC</td>
+<td>begin;<br>DELETE FROM accounts WHERE id = 4;<br>commit;– 删除 UserC 并提交事务</td>
+</tr>
+<tr>
+<td>SELECT * FROM accounts WHERE id=4; – 没有结果，出现幻读</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SELECT balance<br>FROM accounts<br>WHERE id = 1; – 此时返回 7000</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>begin;<br>SELECT balance<br>FROM accounts<br>WHERE id = 1; – 此时返回 7000</td>
+</tr>
+<tr>
+<td>UPDATE accounts set balance = 6000 WHERE id = 1; – 更新为 6000</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>UPDATE accounts set balance = 8000 WHERE id = 1; – 等待事务 1 提交</td>
+</tr>
+<tr>
+<td>commit;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>commit;</td>
+</tr>
+<tr>
+<td>SELECT balance<br>FROM accounts<br>WHERE id = 1; – 返回 8000，而不是自己修改成的6000，更新丢失</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="psql常用命令"><a href="#psql常用命令" class="headerlink" title="psql常用命令"></a>psql常用命令</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs sql">  \l  查看所有数据库<br>  \d [ <span class="hljs-keyword">pattern</span> ] 该命令将显示每个匹配关系（表、视图、索引、序列）的信息，可以加上 <span class="hljs-operator">+</span> 查看更多的信息，如 \d<span class="hljs-operator">+</span><br><span class="hljs-number">1</span>、不加任何参数表示查看当前数据库的所有表。<br><span class="hljs-number">2</span>、\d tablename 后面跟一个表名，表示显示这个表的结构定义<br><span class="hljs-number">3</span>、\d indexname 也可以显示索引的信息，如 \d 索引名称<br><span class="hljs-number">4</span>、\d <span class="hljs-operator">*</span> 后面也可以跟通配符如 &quot;*&quot; 或 &quot;?&quot;，\d x<span class="hljs-operator">*</span><br><span class="hljs-number">5</span>、\d<span class="hljs-operator">+</span> 将显示比 \d 更详细的信息，还会显示任何与表关系的注释，以及表中出现的 OID <br><span class="hljs-number">6</span>、\dt 只显示匹配的表  <br>   \di 只显示索引<br>   \ds  只显示序列<br>   \dv 只显示视图<br>   \df 只显示函数<br><span class="hljs-number">7</span>、\timing <span class="hljs-keyword">on</span>或off 显示 <span class="hljs-keyword">SQL</span> 已执行的时间，默认情况下是 off         <br><span class="hljs-number">8</span>、\dn 列出所有的 schema <br><span class="hljs-number">9</span>、 \du 或 \dg 列出所有的数据库用户和角色<br><span class="hljs-number">10</span>、\db 显示所有的表空间，表空间其实是一个目录，放在这个表空间的表，就是把表的数据文件发到这个表空间下。<br><span class="hljs-number">11</span>、\dp 或 \z 显示表的权限分配情况<br><span class="hljs-number">12</span>、\encoding 指定客户端的字符编码，如 \encoding UTF8; <br><span class="hljs-number">13</span>、\pset 设置输出的格式，\pset border <span class="hljs-number">0</span> : 表示输出内容无边框。 border <span class="hljs-number">1</span> ：表示边框只在内部。border <span class="hljs-number">2</span> ：内外都有边框<br><span class="hljs-number">14</span>、\x 把表中的每一行的每列数据都拆分为单行展示，与 MySQL 中的 &quot;\G&quot; 的功能类似。<br><span class="hljs-number">15</span>、\echo 用于输出一行信息，通常用于在 .<span class="hljs-keyword">sql</span> 文件中输出一些提示信息。 <br><span class="hljs-number">16</span>、\password 设置密码<br><span class="hljs-number">17</span>、\conninfo 列出当前数据库连接的信息<br><span class="hljs-number">18</span>、\dx 查看数据库中安装的扩展 或 <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> pg_extension;<br>注：更多的命令可以用 \? 来显示  <br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/PostgreSQL/">PostgreSQL</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/24/Influxdb-2-x-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+                        <span class="hidden-mobile">Influxdb 2.x 快速入门</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/Latiy-125/Latiy-125.github.io" target="_blank" rel="nofollow noopener"><span>Latiy</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,564 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="山上的清风">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="核心概念Organizationorganization 是一组用户的工作空间，一个组下用户可以创建多个bucket bucket所有的 influxdb数据都存储在bucket中，bucket结合了数据库和保存期限（每条数据会被保留的时间）的概念，类似于RDMS的database的概念。bucket属于一个organization Measurementmeasurement是所有 tags f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Influxdb 2.x 快速入门">
+<meta property="og:url" content="http://example.com/2022/04/24/Influxdb-2-x-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Latiy博客">
+<meta property="og:description" content="核心概念Organizationorganization 是一组用户的工作空间，一个组下用户可以创建多个bucket bucket所有的 influxdb数据都存储在bucket中，bucket结合了数据库和保存期限（每条数据会被保留的时间）的概念，类似于RDMS的database的概念。bucket属于一个organization Measurementmeasurement是所有 tags f">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-24T04:21:26.000Z">
+<meta property="article:modified_time" content="2022-04-26T05:29:24.960Z">
+<meta property="article:author" content="山上的清风">
+<meta property="article:tag" content="influxdb">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Influxdb 2.x 快速入门 - Latiy博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":false,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>山上的清风</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Influxdb 2.x 快速入门">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      山上的清风
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-24 12:21" pubdate>
+        2022年4月24日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      56 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Influxdb 2.x 快速入门</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2022年4月26日 下午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h1><h2 id="Organization"><a href="#Organization" class="headerlink" title="Organization"></a>Organization</h2><p><code>organization</code> 是一组用户的工作空间，一个组下用户可以创建多个bucket</p>
+<h3 id="bucket"><a href="#bucket" class="headerlink" title="bucket"></a>bucket</h3><p>所有的 influxdb数据都存储在bucket中，<code>bucket</code>结合了数据库和保存期限（每条数据会被保留的时间）的概念，类似于RDMS的database的概念。<code>bucket</code>属于一个<code>organization</code></p>
+<h3 id="Measurement"><a href="#Measurement" class="headerlink" title="Measurement"></a>Measurement</h3><p><code>measurement</code>是所有 tags fields 和时间的容器和RDMS的table的概念类似,是一个数据集的容器</p>
+<h3 id="Fields"><a href="#Fields" class="headerlink" title="Fields"></a>Fields</h3><p>数据属性包括field key 和 field value 分别存储在 <code>_field</code>和 <code>_value</code>当中, 并且一个measurement中必须包含至少一个filed</p>
+<h3 id="Field-key"><a href="#Field-key" class="headerlink" title="Field key"></a>Field key</h3><p>field key 是一个代表属性名称的字段，在示例数据中<code>bees</code>和<code>ants</code>就是field key</p>
+<h3 id="Field-value"><a href="#Field-value" class="headerlink" title="Field value"></a>Field value</h3><p>field value 是对应 field key 的值,在示例数据中在<code>2019-08-18T00:00:00Z</code>该时间点 <code>bees</code>的值为23，而<code>ants</code>的值为30</p>
+<h3 id="Field-set"><a href="#Field-set" class="headerlink" title="Field set"></a>Field set</h3><p>field set 表示在同一时间内 所有fields的集合</p>
+<h3 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h3><p>和Fields类似，Tags也有 key value。但与Fields不同的是，field key存储在<code>_field</code>列中 而tag key则是本省就是列</p>
+<h3 id="tag-key-和-tag-value"><a href="#tag-key-和-tag-value" class="headerlink" title="tag key 和 tag value"></a>tag key 和 tag value</h3><p>即tag 的 key 和 value 在Line Protocl中有更为直观的体现</p>
+<h3 id="timestamp"><a href="#timestamp" class="headerlink" title="timestamp"></a>timestamp</h3><p>所有存储在influxdb中的数据都有一个<code>_time</code>列用来记录时间，在磁盘中以纳秒之间戳存储，但客户端查询时返回的是格式化的更易读的 <a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://docs.influxdata.com/influxdb/v2.1/reference/glossary/%23rfc3339-timestamp">RFC3339</a> UTC时间格式</p>
+<p>注：</p>
+<ul>
+<li>对于Fields 和 Tags 简单来说他们都是一组键值对的集合。在存储形式上，field 的key 被存储在一个名为<code>_field</code>的列中,而tag 的key则是以列头的形式存在的,该列的内容即为tag value。可以从示例数据中直观的看出其区别。</li>
+<li>另外值得注意的是，field 和 tag 都可以用来存储数据，但tag只能存储字符串类型数据，而filed既可以存储字符串类型又可以存储数值类型数据。</li>
+<li>那么我是否可以在tag中存储字符串形式的数据呢？</li>
+<li>当然可以但其不可以参与flux查询中的<code>mean()</code> <code>max()</code> 等聚合函数的计算。所以field 和 tag 还是有着本质上的区别的。</li>
+</ul>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h2><p>influxdb 安装比较简单直接下载可执行文件运行即可</p>
+<p><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://dl.influxdata.com/influxdb/releases/influxdb2-2.1.1-windows-amd64.zip">Windows下载链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://dl.influxdata.com/influxdb/releases/influxdb2-2.1.1-linux-amd64.tar.gz">Linux下载链接</a></p>
+<p>解压后直接运行<code>influxd</code>即可，服务启动后访问 localhost:8086 进行首次配置。</p>
+<h2 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h2><p>使用docker方式运行时可直接<code>docker run</code>访问IP:8086进行初始化，也可在启动容器时初始化。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">docker run -d -p 8086:8086 \<br>      -e DOCKER_INFLUXDB_INIT_MODE=setup \<br>      -e DOCKER_INFLUXDB_INIT_USERNAME=dev \  <br>      -e DOCKER_INFLUXDB_INIT_PASSWORD=dev12345678 \      <br>      -e DOCKER_INFLUXDB_INIT_ORG=dev \  <br>      -e DOCKER_INFLUXDB_INIT_BUCKET=dev \  <br>      influxdb:2.2.0<br>docker run -d -p 8086:8086 --name influxdb <br>			-e DOCKER_INFLUXDB_INIT_MODE=setup <br>			-e DOCKER_INFLUXDB_INIT_USERNAME=dev <br>			-e DOCKER_INFLUXDB_INIT_PASSWORD=dev12345678 <br>			-e DOCKER_INFLUXDB_INIT_ORG=dev <br>			-e DOCKER_INFLUXDB_INIT_BUCKET=dev <br>			-e DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=spreadk-dev-networkmonitor<br>			influxdb:2.2.0<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>-e DOCKER_INFLUXDB_INIT_MODE=setup</code> 指其定为初始化模式。</p>
+</li>
+<li><p><code>-e DOCKER_INFLUXDB_INIT_USERNAME=dev</code> 指定用户名</p>
+</li>
+<li><p><code>-e DOCKER_INFLUXDB_INIT_PASSWORD=dev12345678</code> 指定密码</p>
+</li>
+<li><p><code>-e DOCKER_INFLUXDB_INIT_ORG=dev</code> 创建初始org</p>
+</li>
+<li><p><code>-e DOCKER_INFLUXDB_INIT_BUCKET=dev</code> 创建初始bucket</p>
+</li>
+<li><p><code>DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=spreadk-dev-networkmonitor</code> 创建初始管理员token</p>
+</li>
+</ul>
+<h1 id="influx-CLI"><a href="#influx-CLI" class="headerlink" title="influx CLI"></a>influx CLI</h1><p>注：以docker容器为例</p>
+<p>进入容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker exec -it 容器ID /bin/bash<br></code></pre></td></tr></table></figure>
+
+<h2 id="通用设置"><a href="#通用设置" class="headerlink" title="通用设置"></a>通用设置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">COMMON OPTIONS:<br>   --host value                     HTTP address of InfluxDB [$INFLUX_HOST]<br>   --skip-verify                    Skip TLS certificate chain and host name verification [$INFLUX_SKIP_VERIFY]<br>   --configs-path value             Path to the influx CLI configurations [$INFLUX_CONFIGS_PATH]<br>   --active-config value, -c value  Config name to use for command [$INFLUX_ACTIVE_CONFIG]<br>   --http-debug                     <br>   --json                           Output data as JSON [$INFLUX_OUTPUT_JSON]<br>   --hide-headers                   Hide the table headers in output data [$INFLUX_HIDE_HEADERS]<br>   --token value, -t value          Token to authenticate request [$INFLUX_TOKEN]<br></code></pre></td></tr></table></figure>
+
+<h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">influx user create -n &lt;username&gt; -p &lt;password&gt; -o &lt;org-name&gt;<br>例如：<br><span class="hljs-meta">$ </span><span class="language-bash">influx user create -n <span class="hljs-built_in">test</span> -p test123456</span> <br>ID			Name<br>094275ec20e77000	test<br></code></pre></td></tr></table></figure>
+
+<h3 id="查看用户"><a href="#查看用户" class="headerlink" title="查看用户"></a>查看用户</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx user list</span><br>ID			Name<br>09426e1deb8d3000	dev<br>094275ec20e77000	test<br></code></pre></td></tr></table></figure>
+
+<h3 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx user delete --<span class="hljs-built_in">id</span> &lt;user-id&gt;</span> <br>例：<br><span class="hljs-meta">$ </span><span class="language-bash">influx user delete --<span class="hljs-built_in">id</span> 094275ec20e77000</span><br>ID			Name	Deleted<br>094275ec20e77000	test	true<br></code></pre></td></tr></table></figure>
+
+<h3 id="更新用户-修改用户名"><a href="#更新用户-修改用户名" class="headerlink" title="更新用户(修改用户名)"></a>更新用户(修改用户名)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx user update -i &lt;user-id&gt; -n &lt;new-username&gt;</span><br>例：<br><span class="hljs-meta">$ </span><span class="language-bash">influx user update -i 09426e1deb8d3000 -n dev123</span><br>ID			Name<br>09426e1deb8d3000	dev123<br></code></pre></td></tr></table></figure>
+
+<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx user password -n &lt;username&gt;</span><br>例：<br><span class="hljs-meta">$ </span><span class="language-bash">influx user password -n dev</span><br>? Please type new password for &quot;dev&quot; *********<br>? Please type new password for &quot;dev&quot; again *********<br>Successfully updated password for user &quot;dev&quot;<br></code></pre></td></tr></table></figure>
+
+<p>注：新密码为 dev123456</p>
+<h2 id="oganization管理"><a href="#oganization管理" class="headerlink" title="oganization管理"></a>oganization管理</h2><p>官方建议一个influxdb实例中建组不超过20个，因为influxdb支持大约20个bucket的写入或查询，超过这个值将会对influxdb性能造成影响</p>
+<h4 id="创建oganization"><a href="#创建oganization" class="headerlink" title="创建oganization"></a>创建oganization</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">USAGE:<br>   influx org create [command options] [arguments...] <br>OPTIONS:<br>   --name value, -n value         Name to set on the new organization<br>   --description value, -d value  Description to set on the new organization<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx org create -n &lt;org-name&gt;</span><br>例：<br><span class="hljs-meta">$ </span><span class="language-bash">influx org create -n <span class="hljs-built_in">test</span></span><br>ID			Name<br>ecde102dc2554476	test<br></code></pre></td></tr></table></figure>
+
+<h4 id="查看oganization"><a href="#查看oganization" class="headerlink" title="查看oganization"></a>查看oganization</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx org list</span><br>ID			Name<br>c69da0352db9db73	dev<br>ecde102dc2554476	test<br></code></pre></td></tr></table></figure>
+
+<h4 id="更新oganization"><a href="#更新oganization" class="headerlink" title="更新oganization"></a>更新oganization</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">USAGE:<br>   influx org update [command options] [arguments...]<br>OPTIONS:<br>   --id value, -i value           The organization ID [$INFLUX_ORG_ID]<br>   --name value, -n value         New name to set on the organization [$INFLUX_ORG]<br>   --description value, -d value  New description to set on the organization [$INFLUX_ORG_DESCRIPTION]<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx org update -i &lt;org-id&gt; -n &lt;new-org-name&gt;</span><br>例：<br><span class="hljs-meta">$ </span><span class="language-bash">influx org update -i ecde102dc2554476 -n test123</span><br>ID			Name<br>ecde102dc2554476	test123<br></code></pre></td></tr></table></figure>
+
+<h4 id="删除oganization"><a href="#删除oganization" class="headerlink" title="删除oganization"></a>删除oganization</h4><figure class="highlight shell"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx org delete -i &lt;org-id&gt;</span><br>例：<br><span class="hljs-meta">$ </span><span class="language-bash">influx org delete -i ecde102dc2554476</span><br>ID			Name	Deleted<br>ecde102dc2554476	test123	true<br></code></pre></td></tr></table></figure>
+
+<h2 id="bucket管理"><a href="#bucket管理" class="headerlink" title="bucket管理"></a>bucket管理</h2><p>bucket内的数据是有保存期限的influxdb称之为<code>retention-period-duration</code>,bucket在创建之初就会指定</p>
+<h3 id="bucket创建"><a href="#bucket创建" class="headerlink" title="bucket创建"></a>bucket创建</h3><figure class="highlight shell"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">USAGE:<br>   influx bucket create [command options] [arguments...]<br>OPTIONS:<br>   --org-id value                 The ID of the organization [$INFLUX_ORG_ID]<br>   --org value, -o value          The name of the organization [$INFLUX_ORG]<br>   --name value, -n value         New bucket name [$INFLUX_BUCKET_NAME]<br>   --description value, -d value  Description of the bucket that will be created<br>   --retention value, -r value    Duration bucket will retain data, or 0 for infinite<br>   --shard-group-duration value   Shard group duration used internally by the storage engine<br>   --schema-type value            The schema type (implicit, explicit) (default: implicit)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx bucket create -n &lt;bucket-name&gt; -o &lt;org-name&gt; -r &lt;retention-period-duration&gt;</span><br><span class="hljs-meta"># </span><span class="language-bash">-o 指定organization名称，-r指定数据保留时间(保留时间最少为1h0m0s)</span><br><span class="hljs-meta"># </span><span class="language-bash">数据保留时间单位在以下单位中取值:</span><br><span class="hljs-meta">#</span><span class="language-bash">纳秒 (ns)</span><br><span class="hljs-meta">#</span><span class="language-bash">微秒 (us or µs)</span><br><span class="hljs-meta">#</span><span class="language-bash">毫秒 (ms)</span><br><span class="hljs-meta">#</span><span class="language-bash">秒 (s)</span><br><span class="hljs-meta">#</span><span class="language-bash">分 (m)</span><br><span class="hljs-meta">#</span><span class="language-bash">时 (h)</span><br><span class="hljs-meta">#</span><span class="language-bash">日 (d)</span><br><span class="hljs-meta">#</span><span class="language-bash">周 (w)</span><br><span class="hljs-meta">$ </span><span class="language-bash">influx bucket create -n test-bucket -o dev -r 1h</span> <br>ID			Name		Retention	Shard group duration	Organization ID		Schema Type<br>99d78521560d9539	test-bucket	1h0m0s		1h0m0s			c69da0352db9db73	implicit<br></code></pre></td></tr></table></figure>
+
+<h3 id="bucket更新"><a href="#bucket更新" class="headerlink" title="bucket更新"></a>bucket更新</h3><h4 id="更新bucket名称"><a href="#更新bucket名称" class="headerlink" title="更新bucket名称"></a><strong>更新bucket名称</strong></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx bucket update -i &lt;bucket-id&gt; -n &lt;new-bucket-name&gt;</span><br>例：<br><span class="hljs-meta">$ </span><span class="language-bash">influx bucket update -i 99d78521560d9539 -n bucket-test</span><br>ID			Name		Retention	Shard group duration	Organization ID		Schema Type<br>99d78521560d9539	bucket-test	1h0m0s		1h0m0s			c69da0352db9db73	implicit<br></code></pre></td></tr></table></figure>
+
+<h4 id="更新数据保存时间"><a href="#更新数据保存时间" class="headerlink" title="更新数据保存时间"></a><strong>更新数据保存时间</strong></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx bucket update -i &lt;bucket-id&gt; -r &lt;retention period with units&gt;</span><br>例：<br><span class="hljs-meta">$ </span><span class="language-bash">influx bucket update -i 99d78521560d9539 -r 1h</span>         <br>ID			Name		Retention	Shard group duration	Organization ID		Schema Type<br>99d78521560d9539	bucket-test	1h0m0s		1h0m0s			c69da0352db9db73	implicit<br></code></pre></td></tr></table></figure>
+
+<h3 id="bucket查看"><a href="#bucket查看" class="headerlink" title="bucket查看"></a>bucket查看</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx bucket list -o &lt;org-name or org-id&gt;</span><br>例：<br><span class="hljs-meta">$ </span><span class="language-bash">influx bucket list -o dev</span><br>ID			Name		Retention	Shard group duration	Organization ID		Schema Type<br>d34ed88bdd12bfb4	_monitoring	168h0m0s	24h0m0s			c69da0352db9db73	implicit<br>81d3b260385551ce	_tasks		72h0m0s		24h0m0s			c69da0352db9db73	implicit<br>99d78521560d9539	bucket-test	1h0m0s		1h0m0s			c69da0352db9db73	implicit<br>829767b95b2d5186	dev		infinite	168h0m0s		c69da0352db9db73	implicit<br></code></pre></td></tr></table></figure>
+
+<h4 id="bucket删除"><a href="#bucket删除" class="headerlink" title="bucket删除"></a>bucket删除</h4><h4 id="通过名称删除"><a href="#通过名称删除" class="headerlink" title="通过名称删除"></a><strong>通过名称删除</strong></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx bucket delete -n &lt;bucket-name&gt; -o &lt;org-name&gt;</span><br>例：<br><span class="hljs-meta">$ </span><span class="language-bash">influx bucket delete -n bucket-test -o dev</span><br>ID			Name		Retention	Shard group duration	Organization ID		Schema Type	Deleted<br>99d78521560d9539	bucket-test	1h0m0s		1h0m0s			c69da0352db9db73	implicit	true<br></code></pre></td></tr></table></figure>
+
+<h4 id="通过id删除"><a href="#通过id删除" class="headerlink" title="通过id删除"></a><strong>通过id删除</strong></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$ </span><span class="language-bash">influx bucket delete -i &lt;bucket-id&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="Flux查询语言"><a href="#Flux查询语言" class="headerlink" title="Flux查询语言"></a>Flux查询语言</h1><p>大多数Flux查询遵循如下几个步骤</p>
+<ul>
+<li><p>指定数据源</p>
+</li>
+<li><p>过滤数据</p>
+</li>
+<li><p>对数据整形（重新组织数据结构）</p>
+</li>
+<li><p>数据内容计算</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mysql">//例<br>from(bucket: &quot;example-bucket&quot;)            // ── Source<br>  |&gt; range(start: -1d)                    // ── Filter on time<br>  |&gt; filter(fn: (r) =&gt; r._field == &quot;foo&quot;) // ── Filter on column values<br>  |&gt; group(columns: [&quot;sensorID&quot;])         // ── Shape<br>  |&gt; mean()                               // ── Process<br></code></pre></td></tr></table></figure></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/influxdb/">influxdb</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/26/PostgreSQL14%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">PostgreSQL14开发指南</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/09/mac%E7%94%B5%E8%84%91%E4%B8%8B%E9%85%8D%E7%BD%AEgithub%E7%9A%84ssh/">
+                        <span class="hidden-mobile">mac电脑下配置github的ssh</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/Latiy-125/Latiy-125.github.io" target="_blank" rel="nofollow noopener"><span>Latiy</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
