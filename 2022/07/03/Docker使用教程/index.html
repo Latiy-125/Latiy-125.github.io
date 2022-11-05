@@ -16,20 +16,23 @@
   <meta name="author" content="山上的清风">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Docker使用教程1、安装​    https:&#x2F;&#x2F;hub.docker.com&#x2F;editions&#x2F;community&#x2F;docker-ce-desktop-mac 2、验证(1)验证Docker是否安装，及其版本1$ docker version  (2)启动一个 Nginx 容器，检查能正确获取镜像并运行1$ docker run -d -p 80:80 --name webserver ng">
+    <meta name="description" content="Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后发布到任何流行的 Linux或Windows操作系统的机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Latiy博客">
-<meta property="og:url" content="http://example.com/2021/05/13/Docker%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:title" content="Docker学习笔记">
+<meta property="og:url" content="http://example.com/2022/07/03/Docker%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Latiy博客">
-<meta property="og:description" content="Docker使用教程1、安装​    https:&#x2F;&#x2F;hub.docker.com&#x2F;editions&#x2F;community&#x2F;docker-ce-desktop-mac 2、验证(1)验证Docker是否安装，及其版本1$ docker version  (2)启动一个 Nginx 容器，检查能正确获取镜像并运行1$ docker run -d -p 80:80 --name webserver ng">
+<meta property="og:description" content="Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后发布到任何流行的 Linux或Windows操作系统的机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-05-13T09:32:18.378Z">
-<meta property="article:modified_time" content="2021-09-13T08:36:55.762Z">
+<meta property="og:image" content="http://example.com/img/adorn/docker.png">
+<meta property="article:published_time" content="2022-07-03T04:19:03.000Z">
+<meta property="article:modified_time" content="2022-11-05T02:35:35.971Z">
 <meta property="article:author" content="山上的清风">
+<meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/adorn/docker.png">
   
   
-  <title>Latiy博客</title>
+  <title>Docker学习笔记 - Latiy博客</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -173,7 +176,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="">
+            <span class="h2" id="subtitle" title="Docker学习笔记">
               
             </span>
 
@@ -188,8 +191,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-05-13 17:32" pubdate>
-        2021年5月13日 下午
+      <time datetime="2022-07-03 12:19" pubdate>
+        2022年7月3日 中午
       </time>
     </span>
   
@@ -245,16 +248,16 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">Docker学习笔记</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年9月13日 下午
+                  本文最后更新于：2022年11月5日 上午
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id="Docker使用教程"><a href="#Docker使用教程" class="headerlink" title="Docker使用教程"></a>Docker使用教程</h1><h2 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h2><p>​    <a target="_blank" rel="noopener" href="https://hub.docker.com/editions/community/docker-ce-desktop-mac">https://hub.docker.com/editions/community/docker-ce-desktop-mac</a></p>
+              <h2 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h2><p>​    <a target="_blank" rel="noopener" href="https://hub.docker.com/editions/community/docker-ce-desktop-mac">https://hub.docker.com/editions/community/docker-ce-desktop-mac</a></p>
 <h2 id="2、验证"><a href="#2、验证" class="headerlink" title="2、验证"></a>2、验证</h2><h3 id="1-验证Docker是否安装，及其版本"><a href="#1-验证Docker是否安装，及其版本" class="headerlink" title="(1)验证Docker是否安装，及其版本"></a>(1)验证Docker是否安装，及其版本</h3><figure class="highlight applescript"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs applescript">$ docker <span class="hljs-built_in">version</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="2-启动一个-Nginx-容器，检查能正确获取镜像并运行"><a href="#2-启动一个-Nginx-容器，检查能正确获取镜像并运行" class="headerlink" title="(2)启动一个 Nginx 容器，检查能正确获取镜像并运行"></a>(2)启动一个 Nginx 容器，检查能正确获取镜像并运行</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">$ docker <span class="hljs-built_in">run</span> -d -p <span class="hljs-number">80</span>:<span class="hljs-number">80</span> <span class="hljs-comment">--name webserver nginx</span><br></code></pre></td></tr></table></figure>
@@ -545,6 +548,13 @@
               <div class="post-metas mb-3">
                 
                 
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Docker/">Docker</a>
+                    
+                  </div>
+                
               </div>
               
                 <p class="note note-warning">
@@ -558,9 +568,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/06/05/SpringBoot%E6%95%B4%E5%90%88Mybatis/">
+                      <a href="/2022/08/14/Eureka+Feign%E5%AE%9E%E7%8E%B0%E4%B8%A4%E4%B8%AA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B0%83%E7%94%A8/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">SpringBoot整合Mybatis</span>
+                        <span class="hidden-mobile">Spring Cloud 使用Eureka进行feign调用</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -568,8 +578,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/04/24/javaconfig/">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2022/04/26/PostgreSQL14%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/">
+                        <span class="hidden-mobile">PostgreSQL14开发指南</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
